@@ -1,0 +1,22 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Contribution
+{% endblock %}
+
+{% block content %}
+
+    <div id="main">
+
+        Please, make your decision.
+        <br><br>
+        {% formfield player.binary_choice %}
+        <br>
+
+    </div>
+
+    {% next_button %}
+{% endblock %}
+
+

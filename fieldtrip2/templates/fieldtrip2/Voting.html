@@ -1,0 +1,27 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Vote Stage
+{% endblock %}
+
+{% block content %}
+
+    <div id="main">
+
+        <br>
+        Now, please decide which players do you want to exclude from the bonus? <br>
+        If there is a majority in your group voting, the respective players will be excluded from the bonus.
+
+        <br><br>
+
+        {% formfield player.vote %}
+        <br>
+
+    </div>
+
+
+    {% next_button %}
+{% endblock %}
+
+
