@@ -105,6 +105,7 @@ SESSION_CONFIGS = [
         'display_name': 'fieldtrip2',
         'num_demo_participants': 3,
         'treatment': 'sanction', # 'nosanction'
+        'debug' : 'on', #put 'off' on the field
         'app_sequence': ['fieldtrip2'],
     }
 ]

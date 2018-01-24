@@ -3,9 +3,26 @@ from ._builtin import Page, WaitPage
 from .models import Constants
 
 
+# note: you also have to condition in the template e.g. you cannot have belief_q2 in round 2 there
+class Belief(Page):
+    form_model = 'player'
+    def get_form_fields(self):
+        if self.player.round_number == 1:
+            return ['belief_q1', 'belief_q2', 'belief_q3']
+        elif self.player.round_number > 1:
+            return ['belief_q3']
+        else:
+            print('Never see me..')
+
+
+
 class Contribution(Page):
     form_model = 'player'
     form_fields = ['binary_choice']
+
+    def before_next_page(self):
+        # you could do this in VotingWaitPage, I just want not all the calculations to happen there
+        self.player.update_privat_account()
 
 
 class Voting(Page):
@@ -14,20 +31,36 @@ class Voting(Page):
     form_model = 'player'
     form_fields = ['vote']
 
-
+#TODO: you might have to condition here on the type of treatment which is played
 class VotingWaitPage(WaitPage):
     wait_for_all_groups = True
-    def is_displayed(self):
-        return self.session.config['treatment'] == 'sanction'
 
     # when waiting for all groups this is only called once in total
     def after_all_players_arrive(self):
         for group in self.subsession.get_groups():
             group.define_bonus()
+            group.set_num_giver()
+            group.set_group_account()
+            for player in group.get_players():
+                player.set_indiv_share()
+                player.calc_net_payoff()
+
+        # TODO you could do this also earlier at voting e. g. But you have to make sure, that the function is only called once
+        # TODO and not one time for every group or even every player. Check if this slows down, but it really should not.
+        # evalute the mode's of the binary choice and belief_q1
+        if self.round_number == 1:
+            self.subsession.set_frequent_binary_choice()
+            self.subsession.set_frequent_binary_belief()
+        else:
+            self.subsession.set_frequent_binary_choice()
+        # distributing the bonus for the players, when there expectations about the others were right
+        # note: conditioning about the round number happens in the function
+        self.subsession.set_belief_bonus()
 
 
 class DecisionResults(Page):
     # initilize template variables to display on the page
+    # this is needed to be able to display the variables of the other players in the group
     def vars_for_template(self):
         # keys of var_dic are the variable names in the template
         var_dic = {}
@@ -43,17 +76,27 @@ class DecisionResults(Page):
         return var_dic
 
 
+class PayoffResults(Page):
+    def vars_for_template(self):
+        var_dic = {}
+        for player in self.group.get_players():
+            labelstripped = player.label.replace(' ', '')
+            var_dic[labelstripped + '_indiv_share'] = player.indiv_share
+            var_dic[labelstripped + '_bonus_amount'] = player.bonus_amount
+            var_dic[labelstripped + '_privat_account'] = player.privat_account
+            var_dic[labelstripped + '_net_payoff'] = player.net_payoff
 
-
-
+        return var_dic
 
 
 
 
 page_sequence = [
+    Belief,
     Contribution,
     Voting,
     VotingWaitPage,
     DecisionResults,
+    PayoffResults
 
 ]

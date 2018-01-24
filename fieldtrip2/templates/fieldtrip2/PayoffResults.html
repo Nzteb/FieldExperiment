@@ -1,0 +1,91 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Payoff Results
+{% endblock %}
+
+{% block content %}
+
+
+    <br>
+    For the players in your group, <b>{{ group.num_giver }}</b> gave their <b>{{ Constants.ini_privat }}</b> points to the group account.<br>
+    Therefore, your group account now consists of <b>{{ group.group_account }}</b> points.<br>
+    All the players in your group will get <b>{{ player.indiv_share }}</b> points from the group account.<br>
+
+    <br>
+    Below, you can inspect the detailed payments of this round.
+    <div id="main">
+    <table class="table">
+        <tr>
+            <th><b>Player Label</b></th>
+            <th><b>Privat Account</b></th>
+            <th><b>Group Account</b></th>
+            <th><b>Share from Group Account</b></th>
+            <th><b>Bonus</b></th>
+            <th><b>Points this round</b></th>
+        </tr>
+
+        <tr>
+            <th>{% if player.label == 'Player A'%} <p style="color: blue">You</p> {% else %} Player A</p> {% endif %}</th>
+            <th>{% if player.label == 'Player A'%} <p style="color: blue">{{ PlayerA_privat_account }}</p> {% else %}<p>{{ PlayerA_privat_account }}</p>{% endif %}</th>
+            <th>{% if player.label == 'Player A'%} <p style="color: blue">{{ group.group_account }}</p> {% else %}<p>{{ group.group_account }}</p>{% endif %}</th>
+            <th>{% if player.label == 'Player A'%} <p style="color: blue">{{ PlayerA_indiv_share }}</p> {% else %}<p>{{ PlayerA_indiv_share }}</p>{% endif %}</th>
+            <th>{% if player.label == 'Player A'%} <p style="color: blue"> {{ PlayerA_bonus_amount }}</p> {% else %}<p>{{ PlayerA_bonus_amount }}</p>{% endif %}</th>
+            <th>{% if player.label == 'Player A'%} <p style="color: blue"> {{ PlayerA_net_payoff }}</p> {% else %}<p>{{ PlayerA_net_payoff }}</p>{% endif %}</th>
+        </tr>
+
+        <tr>
+            <th>{% if player.label == 'Player B'%} <p style="color: blue">You</p> {% else %} Player B {% endif %}</th>
+            <th>{% if player.label == 'Player B'%} <p style="color: blue">{{ PlayerB_privat_account }}</p> {% else %}<p>{{ PlayerB_privat_account }}</p>{% endif %}</th>
+            <th>{% if player.label == 'Player B'%} <p style="color: blue">{{ group.group_account }}</p> {% else %}<p>{{ group.group_account }}</p>{% endif %}</th>
+            <th>{% if player.label == 'Player B'%} <p style="color: blue">{{ PlayerB_indiv_share }}</p> {% else %}<p>{{ PlayerB_indiv_share }}</p>{% endif %}</th>
+            <th>{% if player.label == 'Player B'%} <p style="color: blue">{{ PlayerB_bonus_amount }}</p> {% else %}<p>{{ PlayerB_bonus_amount }}</p>{% endif %}</th>
+            <th>{% if player.label == 'Player B'%} <p style="color: blue"> {{ PlayerB_net_payoff }}</p> {% else %}<p>{{ PlayerB_net_payoff }}</p>{% endif %}</th>
+        </tr>
+
+        <tr>
+            <th>{% if player.label == 'Player C'%} <p style="color: blue">You</p> {% else %} Player C <p>{% endif %}</p></th>
+            <th>{% if player.label == 'Player C'%} <p style="color: blue">{{ PlayerC_privat_account }}</p> {% else %}<p>{{ PlayerC_privat_account }}</p>{% endif %}</th>
+            <th>{% if player.label == 'Player C'%} <p style="color: blue">{{ group.group_account }}</p> {% else %}<p>{{ group.group_account }}</p>{% endif %}</th>
+            <th>{% if player.label == 'Player C'%} <p style="color: blue">{{ PlayerC_indiv_share }}</p> {% else %}<p>{{ PlayerC_indiv_share }}</p>{% endif %}</th>
+            <th>{% if player.label == 'Player C'%} <p style="color: blue">{{ PlayerC_bonus_amount }}</p> {% else %}<p>{{ PlayerC_bonus_amount }}</p>{% endif %}</th>
+            <th>{% if player.label == 'Player C'%} <p style="color: blue"> {{ PlayerC_net_payoff }}</p> {% else %}<p>{{ PlayerC_net_payoff }}</p>{% endif %}</th>
+        </tr>
+    </table>
+    <br>
+    Congratulation, you earned <b>{{ player.net_payoff }}</b> points this round.<br>
+    At the end of the game, we also determine if your guess about the behavior of the other players was correct.<br>
+
+    <br>
+    <br>
+
+
+    {% if subsession.debug == 'on' %}
+        -------------------------------------------------------------------------------------------------------<br>
+        (Debug from Patrick. Set debug='off' in SESSION_CONFIGS in settings.py , to not display this anymore)<br>
+         Check these calculations:<br>
+         Most player have chosen decision {{ subsession.frequent_binary_choice }} for the contribution game. (1: keeping 2: giving)<br>
+         Your belief was, most player would choose {{ player.belief_q3 }} <br>
+         Points that are tracked for you from answering the question: {{ player.q3_bonus }}<br>
+
+        <br>
+         (If round_number > 1 no numbers should be displayed now)<br>
+         Most players belief decision {{ subsession.frequent_binary_belief }} is best. <br>
+         You thought most players would believe {{ player.belief_q2 }} is best.<br>
+         Points that are tracked for you from answering the question: {{ player.q2_bonus }}<br>
+
+
+
+
+        <br>
+    {% endif %}
+
+
+    </div>
+
+
+    {% next_button %}
+{% endblock %}
+
+

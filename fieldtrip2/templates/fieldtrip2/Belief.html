@@ -1,0 +1,41 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Belief
+{% endblock %}
+
+{% block content %}
+
+    <div id="main">
+
+
+    {% if player.round_number == 1 %}
+
+        Please answer the following questions. You will get <b>{{ Constants.belief_bonus }}</b> point each, if you answer question 2 and 3 correctly.
+        <br><br>
+
+        {% formfield player.belief_q1 %}
+        {% formfield player.belief_q2 %}
+        {% formfield player.belief_q3 %}
+
+    {% else %}
+        Please answer the following question. You will get <b>{{ Constants.belief_bonus }}</b> point, if you answer it correctly.
+        {% formfield player.belief_q3 %}
+
+    {% endif %}
+
+
+
+
+
+
+
+
+    </div>
+
+
+    {% next_button %}
+{% endblock %}
+
+
