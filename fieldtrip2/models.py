@@ -13,7 +13,7 @@ Your app description
 
 class Constants(BaseConstants):
     name_in_url = 'fieldtrip2'
-    players_per_group = 3
+    players_per_group = 3 # must not be changed
     num_rounds = 2
 
     # initial value of the privat account
@@ -21,10 +21,14 @@ class Constants(BaseConstants):
     ini_privat = 3
     bonus = 1
     multiplier = 2 / players_per_group
+    gm_21 = [[[16, 21, 13], [5, 8, 20], [11, 17, 7], [2, 3, 1], [10, 14, 9], [15, 12, 6], [19, 4, 18]] , [[5, 9, 18], [7, 6, 16], [3, 13, 17], [15, 1, 4], [10, 12, 19], [2, 8, 21], [11, 20, 14]] , [[1, 8, 7], [14, 15, 13], [18, 12, 2], [16, 19, 20], [3, 9, 11], [17, 10, 6], [5, 4, 21]]  ,[[1, 6, 13], [15, 19, 5], [16, 2, 4], [14, 12, 7], [18, 11, 21], [17, 9, 8], [3, 10, 20]], [[15, 11, 16], [8, 10, 4], [2, 20, 13], [21, 17, 12], [18, 14, 1], [3, 7, 5], [19, 6, 9]] ,[[11, 1, 19], [8, 13, 12], [2, 9, 7], [14, 21, 3], [17, 5, 16], [6, 4, 20], [18, 10, 15]]  ,[[17, 2, 15], [13, 5, 10], [21, 7, 19], [18, 16, 3], [1, 9, 20], [14, 6, 8], [12, 11, 4]]]
+    gm_18 = [[[12, 16, 6], [1, 17, 15], [2, 7, 4], [9, 14, 8], [5, 18, 3], [10, 13, 11]] ,[[4, 15, 9], [2, 11, 8], [12, 10, 1], [14, 16, 5], [18, 7, 17], [13, 6, 3]]  , [[15, 6, 2], [13, 1, 9], [8, 10, 16], [7, 5, 12], [17, 3, 14], [4, 11, 18]] ,[[1, 5, 2], [3, 9, 7], [11, 15, 12], [6, 17, 8], [18, 10, 14], [4, 13, 16]] ,[[12, 2, 3], [8, 18, 13], [14, 4, 6], [15, 10, 7], [11, 1, 16], [5, 17, 9]] , [[11, 5, 6], [15, 14, 13], [4, 10, 3], [8, 1, 7], [16, 17, 2], [18, 9, 12]], [[16, 3, 15], [5, 4, 8], [7, 14, 11], [2, 9, 10], [12, 17, 13], [1, 18, 6]] ]
+    gm_15 = [[[12, 5, 6], [7, 10, 3], [15, 13, 4], [1, 11, 8], [2, 14, 9]], [[1, 5, 7], [11, 2, 4], [14, 8, 12], [13, 10, 6], [9, 3, 15]] , [[1, 15, 6], [3, 4, 5], [7, 8, 2], [14, 13, 11], [9, 12, 10]] ,[[15, 8, 10], [5, 13, 2], [9, 11, 6], [14, 3, 1], [4, 7, 12]] ,[[10, 11, 5], [8, 13, 3], [15, 12, 2], [1, 4, 9], [7, 6, 14]] ,[[13, 1, 12], [2, 6, 3], [7, 11, 15], [14, 10, 4], [5, 9, 8]] ,[[5, 15, 14], [4, 6, 8], [3, 12, 11], [10, 2, 1], [9, 13, 7]]]
 
 
 
 class Subsession(BaseSubsession):
+
 
     # put to 'off' in settings.py
     debug = models.StringField()
@@ -40,8 +44,24 @@ class Subsession(BaseSubsession):
 
 
     def creating_session(self):
-        # TODO implement total stranger matching for all possible group sizes which are relevant
-        self.group_randomly()
+
+
+
+        player_num = len(self.get_players())
+        # determine the total stranger matching
+        # TODO if the game is played with less then 15 participants determination falls back to random shuffled groups
+        for round in range(1,Constants.num_rounds+1):
+            # you should be even able to play less rounds with 21,18,15 players in that implementation
+            if self.round_number == round:
+                if player_num == 21:
+                    self.set_group_matrix(Constants.gm_21[round-1])
+                elif player_num == 18:
+                    self.set_group_matrix(Constants.gm_18[round-1])
+                elif player_num == 15:
+                    self.set_group_matrix(Constants.gm_15[round-1])
+                else:
+                    self.group_randomly()
+
 
         # set player labels A,B,C
         self.define_label()
@@ -109,9 +129,6 @@ class Subsession(BaseSubsession):
                 player.label = matchdic[player.id_in_group]
 
 
-
-
-
 class Group(BaseGroup):
 
     group_account = models.IntegerField(initial=0)
@@ -162,18 +179,23 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
 
+    breakpointcounter2 = models.IntegerField(initial=1)
+    breakpoint2 = models.IntegerField(label='Enter code here:')
+
+    # tracks which breakpoint code to use
+    breakpointcounter1 = models.IntegerField(initial=1)
+    breakpoint1 = models.IntegerField(label='Enter code here:')
+
     treatment = models.StringField(choices=['sanction' , 'nosanction'])
 
     # this is the net payoff of one round, consists of group share + indiv share + bonus
     net_payoff = models.IntegerField()
-
 
     label = models.StringField()
 
     privat_account = models.IntegerField(initial=Constants.ini_privat)
 
     indiv_share = models.IntegerField(initial=0)
-
 
     # initialize with true
     gets_bonus = models.BooleanField(initial=True)

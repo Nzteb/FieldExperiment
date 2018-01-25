@@ -1,0 +1,28 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Break Point
+{% endblock %}
+
+{% block content %}
+
+    <div id="main">
+
+    {% if player.breakpointcounter2 == 1 %}
+        Now, lets have a break. After the break a code will be given to you to resume to the survey.
+        <br><br>
+    {% else %}
+        This is a breakpoint, please wait for the instructor. Please enter your code here, after you received it.
+        <br><br>
+    {% endif %}
+
+    {% formfield player.breakpoint2 %}
+
+    </div>
+
+
+    {% next_button %}
+{% endblock %}
+
+

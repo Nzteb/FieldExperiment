@@ -1,0 +1,23 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Break Point
+{% endblock %}
+
+{% block content %}
+
+    <div id="main">
+
+    This is a breakpoint, please wait for the instructor. Please enter your code here, after you received it.
+        <br><br>
+
+    {% formfield player.breakpoint1 %}
+
+    </div>
+
+
+    {% next_button %}
+{% endblock %}
+
+

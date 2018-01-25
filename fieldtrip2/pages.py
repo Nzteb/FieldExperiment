@@ -15,7 +15,6 @@ class Belief(Page):
             print('Never see me..')
 
 
-
 class Contribution(Page):
     form_model = 'player'
     form_fields = ['binary_choice']
@@ -45,7 +44,7 @@ class VotingWaitPage(WaitPage):
                 player.set_indiv_share()
                 player.calc_net_payoff()
 
-        # TODO you could do this also earlier at voting e. g. But you have to make sure, that the function is only called once
+        # TODO you could do this also earlier at voting e. g. But you have to make sure that the function is only called once
         # TODO and not one time for every group or even every player. Check if this slows down, but it really should not.
         # evalute the mode's of the binary choice and belief_q1
         if self.round_number == 1:
@@ -109,14 +108,67 @@ class Elicitation2(Page):
             return ['amb_elic']
 
 
+# so basically, for every round where you need one, one breakpoint class should do the job
+class DynamicBreakPoint1(Page):
+    def is_displayed(self):
+        return (self.round_number == 1)
+    form_model = 'player'
+    form_fields = ['breakpoint1']
+
+    def breakpoint1_error_message(self, value):
+        if self.player.breakpointcounter1 == 1:
+            if value != 1234:
+                return "Please enter the correct code or wait until you receive the code from your instructor"
+        elif self.player.breakpointcounter1 == 2:
+            if value != 2468:
+                return "Please enter the correct code or wait until you receive the code from your instructor"
+    # TODO rethink this
+    # TODO this might be an objection to have a breakpointcounter on player level
+    # TODO yet, one on subsessionlevel, I would not know how to increment it only one time
+    # TODO and if every player increments it or sets it, then you can actually have the variable on player level
+    # TODO also, if I only let one player increment the counter on subsession level, if that tablet dies, then the other players cannot proceed
+    def before_next_page(self):
+        self.player.breakpointcounter1 += 1
+
+
+class DynamicBreakPoint2(Page):
+    def is_displayed(self):
+        return (self.round_number == Constants.num_rounds)
+    form_model = 'player'
+    form_fields = ['breakpoint2']
+
+    def breakpoint2_error_message(self, value):
+        if self.player.breakpointcounter2 == 1:
+            if value != 9988:
+                return 'Please enter the correct code or wait until you receive the code from your instructor'
+        elif self.player.breakpointcounter2 == 2:
+            if value != 1010:
+                return 'Please enter the correct code or wait until you receive the code from your instructor'
+        elif self.player.breakpointcounter2 == 3:
+            if value != 2018:
+                return 'Please enter the correct code or wait until you receive the code from your instructor'
+    # TODO: check page class before
+    def before_next_page(self):
+        self.player.breakpointcounter2 += 1
+
+
+
+
+
+
+
 page_sequence = [
     Belief,
+    DynamicBreakPoint1,
     Contribution,
     Voting,
     VotingWaitPage,
     DecisionResults,
     PayoffResults,
+    DynamicBreakPoint1,
+    DynamicBreakPoint2,
     Elicitation1,
-    Elicitation2
-
+    DynamicBreakPoint2,
+    Elicitation2,
+    DynamicBreakPoint2
 ]
