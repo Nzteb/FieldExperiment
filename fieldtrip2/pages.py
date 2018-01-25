@@ -88,7 +88,25 @@ class PayoffResults(Page):
 
         return var_dic
 
+class Elicitation1(Page):
+    def is_displayed(self):
+        return (self.round_number == Constants.num_rounds)
+    form_model = 'player'
+    def get_form_fields(self):
+        if self.session.config['treatment'] == 'sanction':
+            return ['risk_elic']
+        elif self.session.config['treatment'] == 'nosanction':
+            return ['amb_elic']
 
+class Elicitation2(Page):
+    def is_displayed(self):
+        return (self.round_number == Constants.num_rounds)
+    form_model = 'player'
+    def get_form_fields(self):
+        if self.session.config['treatment'] == 'nosanction':
+            return ['risk_elic']
+        elif self.session.config['treatment'] == 'sanction':
+            return ['amb_elic']
 
 
 page_sequence = [
@@ -97,6 +115,8 @@ page_sequence = [
     Voting,
     VotingWaitPage,
     DecisionResults,
-    PayoffResults
+    PayoffResults,
+    Elicitation1,
+    Elicitation2
 
 ]
