@@ -31,17 +31,20 @@ class Voting(Page):
     form_fields = ['vote']
 
 #TODO: you might have to condition here on the type of treatment which is played
-class VotingWaitPage(WaitPage):
+class BeforeResultsWaitPage(WaitPage):
     wait_for_all_groups = True
 
     # when waiting for all groups this is only called once in total
     def after_all_players_arrive(self):
         for group in self.subsession.get_groups():
-            group.define_bonus()
+            # bonus only in sanction treatment
+            if self.session.config['treatment'] == 'sanction':
+                group.define_bonus()
             group.set_num_giver()
             group.set_group_account()
             for player in group.get_players():
                 player.set_indiv_share()
+                # conditioning for treatment happens in the calc_net function already
                 player.calc_net_payoff()
 
         # TODO you could do this also earlier at voting e. g. But you have to make sure that the function is only called once
@@ -57,7 +60,7 @@ class VotingWaitPage(WaitPage):
         self.subsession.set_belief_bonus()
 
 
-class DecisionResults(Page):
+class Results(Page):
     # initilize template variables to display on the page
     # this is needed to be able to display the variables of the other players in the group
     def vars_for_template(self):
@@ -69,23 +72,21 @@ class DecisionResults(Page):
         for player in self.group.get_players():
             labelstripped = player.label.replace(' ', '')
             var_dic[labelstripped + '_choice' ] = map_choices[player.binary_choice]
-            var_dic[labelstripped + '_vote'] = map_votes[player.vote]
-            var_dic[labelstripped + '_bonus'] = map_bonus[player.gets_bonus]
-
-        return var_dic
-
-
-class PayoffResults(Page):
-    def vars_for_template(self):
-        var_dic = {}
-        for player in self.group.get_players():
-            labelstripped = player.label.replace(' ', '')
+            if player.treatment == 'sanction':
+                var_dic[labelstripped + '_vote'] = map_votes[player.vote]
+                var_dic[labelstripped + '_bonus'] = map_bonus[player.gets_bonus]
+                var_dic[labelstripped + '_bonus_amount'] = player.bonus_amount
+            else:
+                var_dic[labelstripped + '_vote'] = 'No voting in game'
+                var_dic[labelstripped + '_bonus'] = 'No bonus in game'
+                var_dic[labelstripped + '_bonus_amount'] = 'No bonus in game'
             var_dic[labelstripped + '_indiv_share'] = player.indiv_share
-            var_dic[labelstripped + '_bonus_amount'] = player.bonus_amount
+
             var_dic[labelstripped + '_privat_account'] = player.privat_account
             var_dic[labelstripped + '_net_payoff'] = player.net_payoff
 
         return var_dic
+
 
 class Elicitation1(Page):
     def is_displayed(self):
@@ -110,6 +111,9 @@ class Elicitation2(Page):
 
 # so basically, for every round where you need one, one breakpoint class should do the job
 class DynamicBreakPoint1(Page):
+    def after_all_players_arrive(self):
+        self.player.breakpoint1 = ''
+
     def is_displayed(self):
         return (self.round_number == 1)
     form_model = 'player'
@@ -126,12 +130,15 @@ class DynamicBreakPoint1(Page):
     # TODO this might be an objection to have a breakpointcounter on player level
     # TODO yet, one on subsessionlevel, I would not know how to increment it only one time
     # TODO and if every player increments it or sets it, then you can actually have the variable on player level
-    # TODO also, if I only let one player increment the counter on subsession level, if that tablet dies, then the other players cannot proceed
     def before_next_page(self):
         self.player.breakpointcounter1 += 1
+        self.player.breakpoint1 = None
 
 
 class DynamicBreakPoint2(Page):
+    def after_all_players_arrive(self):
+        self.player.breakpoint1 = ''
+
     def is_displayed(self):
         return (self.round_number == Constants.num_rounds)
     form_model = 'player'
@@ -150,6 +157,7 @@ class DynamicBreakPoint2(Page):
     # TODO: check page class before
     def before_next_page(self):
         self.player.breakpointcounter2 += 1
+        self.player.breakpoint2 = None
 
 
 
@@ -162,9 +170,8 @@ page_sequence = [
     DynamicBreakPoint1,
     Contribution,
     Voting,
-    VotingWaitPage,
-    DecisionResults,
-    PayoffResults,
+    BeforeResultsWaitPage,
+    Results,
     DynamicBreakPoint1,
     DynamicBreakPoint2,
     Elicitation1,

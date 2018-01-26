@@ -234,17 +234,24 @@ class Player(BasePlayer):
     q2_bonus = models.IntegerField(initial=0)
     q3_bonus = models.IntegerField(initial=0)
 
-
+    # coding goes as follows: the number reflects the number of hours in A, so e. g. 2 means spend 2 hours in A
+    # this is for the sake of calculation
     risk_elic = models.IntegerField(widget=widgets.RadioSelect(),
-                                    choices = [[1,'Spend all hours in area A'],
-                                               [2,'Spend all hours in area B'],
-                                               [3, 'Spend some time in area A and some time in area B']],
+                                    choices = [[1,'Spend one hour in area A'],
+                                               [2,'Spend two hours in area A'],
+                                               [3, 'Spend three hours in area A'],
+                                               [4, 'Spend four hours in area A'],
+                                               [5, 'Spend five hours in area A'],
+                                               [6, 'Spend six hours in area A']],
                                     label = 'You have 6 hours and you can spend all in area A (where you can gain 3 points per hour spent or get nothing) or all in area B (where you get 1 point per hour spent for sure). Or you can spend some time in area A and some in B.')
 
     amb_elic = models.IntegerField(widget=widgets.RadioSelect(),
-                                    choices=[[1, 'Spend all hours in area A'],
-                                             [2, 'Spend all hours in area B'],
-                                             [3, 'Spend some time in area A and some time in area B']],
+                                   choices=[[1, 'Spend one hour in area A'],
+                                            [2, 'Spend two hours in area A'],
+                                            [3, 'Spend three hours in area A'],
+                                            [4, 'Spend four hours in area A'],
+                                            [5, 'Spend five hours in area A'],
+                                            [6, 'Spend six hours in area A']],
                                     label='You have 6 hours and you can spend all in area A (where you can gain 3 points per hour spent or get nothing) or all in area B (where you get 1 point per hour spent for sure). Or you can spend some time in area A and some in B.')
 
     def update_privat_account(self):
@@ -257,4 +264,8 @@ class Player(BasePlayer):
 
     # see variable note
     def calc_net_payoff(self):
-        self.net_payoff = self.privat_account + self.indiv_share + self.bonus_amount
+        if self.treatment == 'sanction':
+            self.net_payoff = self.privat_account + self.indiv_share + self.bonus_amount
+            # there is no bonus in the nosanction treatment
+        elif self.treatment == 'nosanction':
+            self.net_payoff = self.privat_account + self.indiv_share

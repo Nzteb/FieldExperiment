@@ -72,6 +72,18 @@ DEMO_PAGE_INTRO_HTML = """
 oTree games
 """
 
+ROOM_DEFAULTS = {}
+
+ROOMS = [{
+
+    'name' : 'Natcoop_test',
+    'display_name' : 'Natcoop_test'
+
+}]
+
+
+
+
 mturk_hit_settings = {
     'keywords': ['easy', 'bonus', 'choice', 'study'],
     'title': 'Title for your experiment',
@@ -106,6 +118,15 @@ SESSION_CONFIGS = [
         'num_demo_participants': 3,
         'treatment': 'sanction', # 'nosanction'
         'debug' : 'on', #put 'off' on the field
+        'app_sequence': ['fieldtrip2'],
+    },
+
+    {
+        'name': 'fieldtrip2_no',
+        'display_name': 'fieldtrip2_no',
+        'num_demo_participants': 3,
+        'treatment': 'nosanction',  # 'nosanction'
+        'debug': 'on',  # put 'off' on the field
         'app_sequence': ['fieldtrip2'],
     }
 ]
