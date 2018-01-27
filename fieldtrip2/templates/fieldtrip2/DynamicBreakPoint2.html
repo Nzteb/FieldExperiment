@@ -12,6 +12,12 @@
     {% if player.breakpointcounter2 == 1 %}
         Now, lets have a break. After the break a code will be given to you to resume to the survey.
         <br><br>
+
+    {% elif player.breakpointcounter2 == 4 %}
+
+        Thank you for participating in the survey. Please bring your tablet to the Instructor now and we determine your payoff.<br>
+        Admin, please enter your code.
+
     {% else %}
         This is a breakpoint, please wait for the instructor. Please enter your code here, after you received it.
         <br><br>

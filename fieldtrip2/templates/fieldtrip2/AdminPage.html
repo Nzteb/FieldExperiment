@@ -1,0 +1,24 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Admin
+{% endblock %}
+
+{% block content %}
+
+    <div id="main">
+    <br>
+
+    {% formfield player.elic_question_payed %}
+    {% formfield player.a_good %}
+    {% formfield player.round_payed %}
+
+    <br>
+    </div>
+
+
+    {% next_button %}
+{% endblock %}
+
+

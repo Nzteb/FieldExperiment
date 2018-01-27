@@ -10,18 +10,21 @@
     <div id="main">
 
 
-    Please, answer the question.<br><br>
+
 
 
     {% if player.treatment == 'sanction' %}
 
-
+        Please, answer the question.<br>
+        Which area is good will be determined by a coin toss.
+        <br><br>
         {% formfield player.risk_elic %}
 
 
     {% elif player.treatment == 'nosanction' %}
-
-
+        Please, answer the question.<br>
+        Which area is good will be determined by drawing marbles from a box.
+        <br><br>
         {% formfield player.amb_elic %}
 
     {%  endif %}

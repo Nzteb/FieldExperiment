@@ -1,0 +1,70 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Page title
+{% endblock %}
+
+{% block content %}
+
+    <div id="main">
+
+
+    For the repitition games round <b>{{ rp }}</b> was chosen.<br><br><br>
+
+
+    <table class="table">
+
+        <tr>
+            <th> Payed parts </th>
+            <th> Points Public good</th>
+            <th> Belief Q2 points </th>
+            <th> Belief Q3 points </th>
+            <th> Sum </th>
+        </tr>
+
+        <tr>
+            <th> One Shot </th>
+            <th> {{ os_np }}</th>
+            <th> {{ os_q2_bonus }} </th>
+            <th> {{ os_q3_bonus }} </th>
+            <th> {{ sum_row1 }} </th>
+        </tr>
+
+        <tr>
+            <th> Round {{ rp }} </th>
+            <th> {{ rx_np }}</th>
+            <th> - </th>
+            <th> {{ rx_q3_bonus }} </th>
+            <th> {{ sum_rowx }} </th>
+        </tr>
+
+        <tr>
+            <th> Elicitation: {{ player.elic_question_payed }} </th>
+            <th> - </th>
+            <th> - </th>
+            <th> - </th>
+            <th> {{ player.elic_payoff }} </th>
+        </tr>
+
+         <tr>
+            <th>Overall points  </th>
+            <th>  </th>
+            <th>  </th>
+            <th>  </th>
+            <th> {{ player.gross_payoff }} </th>
+        </tr>
+
+
+    </table>
+
+
+
+    </div>
+
+    <br><br>
+    Note: clicking next, will finish the game for this player.<br>
+    {% next_button %}
+{% endblock %}
+
+

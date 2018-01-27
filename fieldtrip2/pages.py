@@ -126,10 +126,8 @@ class DynamicBreakPoint1(Page):
         elif self.player.breakpointcounter1 == 2:
             if value != 2468:
                 return "Please enter the correct code or wait until you receive the code from your instructor"
-    # TODO rethink this
-    # TODO this might be an objection to have a breakpointcounter on player level
-    # TODO yet, one on subsessionlevel, I would not know how to increment it only one time
-    # TODO and if every player increments it or sets it, then you can actually have the variable on player level
+    # TODO actually I really like my breakpoint idea now. Because we have 6 breakpoints but only 2 classes and
+    # TODO I can, dynamically, simply here and in the template add new breakpoints, without defining new variables!
     def before_next_page(self):
         self.player.breakpointcounter1 += 1
         self.player.breakpoint1 = None
@@ -138,7 +136,6 @@ class DynamicBreakPoint1(Page):
 class DynamicBreakPoint2(Page):
     def after_all_players_arrive(self):
         self.player.breakpoint1 = ''
-
     def is_displayed(self):
         return (self.round_number == Constants.num_rounds)
     form_model = 'player'
@@ -154,10 +151,58 @@ class DynamicBreakPoint2(Page):
         elif self.player.breakpointcounter2 == 3:
             if value != 2018:
                 return 'Please enter the correct code or wait until you receive the code from your instructor'
-    # TODO: check page class before
+        elif self.player.breakpointcounter2 == 4:
+            if value != 4538:
+                return 'Please bring the tablet to the instructor and let him enter the code.'
     def before_next_page(self):
         self.player.breakpointcounter2 += 1
         self.player.breakpoint2 = None
+
+
+class AdminPage(Page):
+    def is_displayed(self):
+        return (self.round_number == Constants.num_rounds)
+    form_model = 'player'
+    form_fields = ['elic_question_payed', 'a_good', 'round_payed']
+
+    def before_next_page(self):
+        self.player.calc_elic_payoff()
+        self.player.calc_gross_payoff()
+
+class GrossPayoff(Page):
+    def is_displayed(self):
+        return (self.round_number == Constants.num_rounds)
+
+    def vars_for_template(self):
+        vars_dic = {}
+        # for us if e. g. round 1 is payed because the dice rolls 1 then for otree this is actually round 2 because the one shot game is round 1
+        round_payed = self.player.round_payed +1
+
+        os_np = self.player.in_round(1).net_payoff
+        os_q2_bonus = self.player.in_round(1).q2_bonus
+        os_q3_bonus = self.player.in_round(1).q3_bonus
+        sum_row1 = os_np + os_q2_bonus + os_q3_bonus
+
+        rx_np = self.player.in_round(round_payed).net_payoff
+        rx_q3_bonus = self.player.in_round(round_payed).q3_bonus
+        sum_rowx = rx_np + rx_q3_bonus
+
+        vars_dic['rp'] = round_payed - 1
+
+        # os for one shot
+        vars_dic['os_np'] = os_np
+        vars_dic['os_q2_bonus'] = os_q2_bonus
+        vars_dic['os_q3_bonus'] = os_q3_bonus
+        vars_dic['sum_row1'] = sum_row1
+
+        # rx for round x
+        vars_dic['rx_np'] = rx_np
+        vars_dic['rx_q3_bonus'] = rx_q3_bonus
+        vars_dic['sum_rowx'] = sum_rowx
+
+        return vars_dic
+
+
 
 
 
@@ -177,5 +222,10 @@ page_sequence = [
     Elicitation1,
     DynamicBreakPoint2,
     Elicitation2,
-    DynamicBreakPoint2
+    DynamicBreakPoint2,
+    #put questionare pages in
+    DynamicBreakPoint2,
+    AdminPage,
+    GrossPayoff
+
 ]
