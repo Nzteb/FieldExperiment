@@ -10,32 +10,83 @@
     <div id="main">
 
 
-    {% if player.round_number == 1 %}
+        {% if player.round_number == 1 %}
 
-        Please answer the following questions. You will get <b>{{ Constants.belief_bonus }}</b> point each, if you answer question 2 and 3 correctly.
-        <br><br>
+            Please answer the following questions. You will get <b>{{ Constants.belief_bonus }}</b> point each, if you answer question 2 and 3 correctly.
+            <br><br>
 
-        {% formfield player.belief_q1 %}
-        {% formfield player.belief_q2 %}
-        {% formfield player.belief_q3 %}
+            What do you think is the right thing one ought to do? <br><br>
+            <label id="label1" for="value1">Keep<br><img src="{% static "fieldtrip2/keep.png" %}"><br>
+            <input type="radio" name="belief_q1" id="value1" value=1 required></label>
+            <label id="label1" for="value2">Give<br><img src="{% static "fieldtrip2/give.png" %}"><br>
+            <input type="radio" name="belief_q1" id="value2" value=2 required></label>
+            <label id="label1" for="value3">Do what others do<br><img src="{% static "fieldtrip2/whatothersdo.png" %}"><br>
+            <input type="radio" name="belief_q1" id="value3" value=3 required></label><br>
 
-    {% else %}
-        Please answer the following question. You will get <b>{{ Constants.belief_bonus }}</b> point, if you answer it correctly.
-        {% formfield player.belief_q3 %}
+            <br><br><br><br><br><br><br><br>
 
-    {% endif %}
+            'What do you guess most group members in this session think that one ought to do?'<br><br>
+            <label id="label1" for="value1">Keep<br><img src="{% static "fieldtrip2/keep.png" %}"><br>
+            <input type="radio" name="belief_q2" id="value1" value=1 required></label>
+            <label id="label1" for="value2">Give<br><img src="{% static "fieldtrip2/give.png" %}"><br>
+            <input type="radio" name="belief_q2" id="value2" value=2 required></label>
+            <label id="label1" for="value3">Do what others do<br><img src="{% static "fieldtrip2/whatothersdo.png" %}"><br>
+            <input type="radio" name="belief_q2" id="value3" value=3 required></label><br>
+
+            <br><br><br><br><br><br><br><br>
+
+            What do you guess most group members in this session would actually do?<br><br>
+            <label id="label1" for="value1">Keep<br><img src="{% static "fieldtrip2/keep.png" %}"><br>
+            <input type="radio" name="belief_q3" id="value1" value=1 required></label>
+            <label id="label1" for="value2">Give<br><img src="{% static "fieldtrip2/give.png" %}"><br>
+            <input type="radio" name="belief_q3" id="value2" value=2 required></label>
 
 
+            <br><br><br><br><br><br><br><br>
+
+        {% else %}
+
+            Please answer the following question. You will get <b>{{ Constants.belief_bonus }}</b> point, if you answer it correctly.
+            <br><br>
+
+            What do you guess most group members in this session would actually do?<br><br>
+            <label id="label1" for="value1">Keep<br><img src="{% static "fieldtrip2/keep.png" %}"><br>
+            <input type="radio" name="belief_q3" id="value1" value=1 required></label>
+            <label id="label1" for="value2">Give<br><img src="{% static "fieldtrip2/give.png" %}"><br>
+            <input type="radio" name="belief_q3" id="value2" value=2 required></label>
 
 
+            <br><br><br><br><br><br><br><br>
 
 
-
+        {% endif %}
 
     </div>
 
-
+    <br><br><br><br>
     {% next_button %}
+{% endblock %}
+
+{% block styles %}
+
+
+    <style type="text/css">
+
+        img{
+            width:9em;
+            height:8em;
+        }
+
+
+        label {
+            float: left;
+            padding: 0 1em;
+            text-align: center;
+        }
+
+    </style>
+
+
 {% endblock %}
 
 

@@ -12,12 +12,46 @@
         You have <b>{{ Constants.ini_privat }}</b> points in your privat account.<br>
         Please, make your decision.
         <br><br>
-        {% formfield player.binary_choice %}
+
+        <label id="label1" for="value1">Keep your points<br><img src="{% static "fieldtrip2/keep.png" %}"><br>
+            <input type="radio" name="binary_choice" id="value1" value=1 required></label>
+        <label id="label1" for="value2">Give points to group account<br><img src="{% static "fieldtrip2/give.png" %}"><br>
+            <input type="radio" name="binary_choice" id="value2" value=2 required></label>
+
+
+            <br><br><br><br><br><br><br><br>
+
+
+
         <br>
 
     </div>
 
     {% next_button %}
 {% endblock %}
+
+
+{% block styles %}
+
+
+    <style type="text/css">
+
+        img{
+            width:9em;
+            height:8em;
+        }
+
+
+        label {
+            float: left;
+            padding: 0 1em;
+            text-align: center;
+        }
+
+    </style>
+
+
+{% endblock %}
+
 
 

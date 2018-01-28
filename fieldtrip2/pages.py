@@ -63,27 +63,26 @@ class BeforeResultsWaitPage(WaitPage):
 class Results(Page):
     # initilize template variables to display on the page
     # this is needed to be able to display the variables of the other players in the group
+    # some vars here are only for debug purposes
     def vars_for_template(self):
         # keys of var_dic are the variable names in the template
         var_dic = {}
-        map_choices = {1:'Kept points',2: 'Gave to account'}
-        map_votes = {1: 'Keeper', 2:'Giver', 3:'No one'}
-        map_bonus = {1: 'Yes', 0:'No'}
         for player in self.group.get_players():
             labelstripped = player.label.replace(' ', '')
-            var_dic[labelstripped + '_choice' ] = map_choices[player.binary_choice]
+
+            var_dic[labelstripped + '_choice' ] = player.binary_choice
+            var_dic[labelstripped + '_indiv_share'] = player.indiv_share
+            var_dic[labelstripped + '_privat_account'] = player.privat_account
+            var_dic[labelstripped + '_net_payoff'] = player.net_payoff
+
             if player.treatment == 'sanction':
-                var_dic[labelstripped + '_vote'] = map_votes[player.vote]
-                var_dic[labelstripped + '_bonus'] = map_bonus[player.gets_bonus]
+                var_dic[labelstripped + '_vote'] = player.vote
+                var_dic[labelstripped + '_bonus'] = player.gets_bonus
                 var_dic[labelstripped + '_bonus_amount'] = player.bonus_amount
             else:
                 var_dic[labelstripped + '_vote'] = 'No voting in game'
                 var_dic[labelstripped + '_bonus'] = 'No bonus in game'
                 var_dic[labelstripped + '_bonus_amount'] = 'No bonus in game'
-            var_dic[labelstripped + '_indiv_share'] = player.indiv_share
-
-            var_dic[labelstripped + '_privat_account'] = player.privat_account
-            var_dic[labelstripped + '_net_payoff'] = player.net_payoff
 
         return var_dic
 
@@ -115,7 +114,7 @@ class DynamicBreakPoint1(Page):
         self.player.breakpoint1 = ''
 
     def is_displayed(self):
-        return (self.round_number == 1)
+        return  (self.round_number == 1)
     form_model = 'player'
     form_fields = ['breakpoint1']
 

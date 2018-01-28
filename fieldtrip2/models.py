@@ -11,6 +11,7 @@ Your app description
 """
 
 
+
 class Constants(BaseConstants):
     name_in_url = 'fieldtrip2'
     players_per_group = 3 # must not be changed
