@@ -325,3 +325,7 @@ class Player(BasePlayer):
 
         self.gross_payoff = points_os + belief_points_os + points_rx + belief_points_rx + self.elic_payoff
 
+
+
+        ####### Questionaire variables
+
