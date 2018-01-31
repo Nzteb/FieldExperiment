@@ -17,15 +17,61 @@
 
         Please, answer the question.<br>
         Which area is good will be determined by a coin toss.
-        <br><br>
-        {% formfield player.risk_elic %}
+        <br><br><br>
+
+        You have 6 hours and you can spend all in area A (where you can gain 3 points per hour spent or get nothing) or all in area B (where you get 1 point per hour spent for sure). Or you can spend some time in area A and some in B. <br><br>
+        <label id="label1" for="value0"><br><img src="{% static "fieldtrip2/A6.png" %}"><br>
+            <input type="radio" name="risk_elic" id="value0" value=6 required></label>
+        <label id="label1" for="value1"><br><img src="{% static "fieldtrip2/A5.png" %}"><br>
+            <input type="radio" name="risk_elic" id="value1" value=5 required></label>
+        <label id="label1" for="value2"><br><img src="{% static "fieldtrip2/A4.png" %}"><br>
+            <input type="radio" name="risk_elic" id="value2" value=4 required></label>
+          <label id="label1" for="value3"><br><img src="{% static "fieldtrip2/A3.png" %}"><br>
+            <input type="radio" name="risk_elic" id="value3" value=3 required></label>
+        <label id="label1" for="value4"><br><img src="{% static "fieldtrip2/A2.png" %}"><br>
+            <input type="radio" name="risk_elic" id="value4" value=2 required></label>
+        <label id="label1" for="value5"><br><img src="{% static "fieldtrip2/A1.png" %}"><br>
+            <input type="radio" name="risk_elic" id="value5" value=1 required></label>
+         <label id="label1" for="value6"><br><img src="{% static "fieldtrip2/A0.png" %}"><br>
+            <input type="radio" name="risk_elic" id="value6" value=0 required></label>
+
+
+            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+
+
+
 
 
     {% elif player.treatment == 'nosanction' %}
         Please, answer the question.<br>
         Which area is good will be determined by drawing marbles from a box.
-        <br><br>
+        <br><br><br>
         {% formfield player.amb_elic %}
+
+
+           You have 6 hours and you can spend all in area A (where you can gain 3 points per hour spent or get nothing) or all in area B (where you get 1 point per hour spent for sure). Or you can spend some time in area A and some in B. <br><br>
+        <label id="label1" for="value0"><br><img src="{% static "fieldtrip2/A6.png" %}"><br>
+            <input type="radio" name="amb_elic" id="value0" value=6 required></label>
+        <label id="label1" for="value1"><br><img src="{% static "fieldtrip2/A5.png" %}"><br>
+            <input type="radio" name="amb_elic" id="value1" value=5 required></label>
+        <label id="label1" for="value2"><br><img src="{% static "fieldtrip2/A4.png" %}"><br>
+            <input type="radio" name="amb_elic" id="value2" value=4 required></label>
+          <label id="label1" for="value3"><br><img src="{% static "fieldtrip2/A3.png" %}"><br>
+            <input type="radio" name="amb_elic" id="value3" value=3 required></label>
+        <label id="label1" for="value4"><br><img src="{% static "fieldtrip2/A2.png" %}"><br>
+            <input type="radio" name="amb_elic" id="value4" value=2 required></label>
+        <label id="label1" for="value5"><br><img src="{% static "fieldtrip2/A1.png" %}"><br>
+            <input type="radio" name="amb_elic" id="value5" value=1 required></label>
+         <label id="label1" for="value6"><br><img src="{% static "fieldtrip2/A0.png" %}"><br>
+            <input type="radio" name="amb_elic" id="value6" value=0 required></label>
+
+
+            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+
+
+
 
     {%  endif %}
 
@@ -36,5 +82,29 @@
     <br>
     {% next_button %}
 {% endblock %}
+
+
+{% block styles %}
+
+
+    <style type="text/css">
+
+        img{
+            width:5em;
+            height:4em;
+        }
+
+
+        label {
+            float: left;
+            padding: 0 1em;
+            text-align: center;
+        }
+
+    </style>
+
+
+{% endblock %}
+
 
 

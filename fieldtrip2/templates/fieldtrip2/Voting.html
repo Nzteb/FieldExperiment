@@ -13,10 +13,17 @@
         Now, please decide which players do you want to exclude from the bonus? <br>
         If there is a majority in your group voting, the respective players will be excluded from the bonus.
 
-        <br><br>
+        <br><br><br>
 
-        {% formfield player.vote %}
-        <br>
+        <label id="label1" for="value1">Exclude Keeper<br><img src="{% static "fieldtrip2/keeperexcluded.png" %}"><br>
+            <input type="radio" name="vote" id="value1" value=1 required></label>
+        <label id="label1" for="value2">Exclude Giver<br><img src="{% static "fieldtrip2/giverexcluded.png" %}"><br>
+            <input type="radio" name="vote" id="value2" value=2 required></label>
+        <label id="label1" for="value3">Exclude no one<br><img src="{% static "fieldtrip2/nooneexcluded.png" %}"><br>
+            <input type="radio" name="vote" id="value3" value=3 required></label><br>
+
+            <br><br><br><br><br><br><br><br>
+
 
     </div>
 
@@ -24,4 +31,24 @@
     {% next_button %}
 {% endblock %}
 
+{% block styles %}
 
+
+    <style type="text/css">
+
+        img{
+            width:11em;
+            height:9em;
+        }
+
+
+        label {
+            float: left;
+            padding: 0 1em;
+            text-align: center;
+        }
+
+    </style>
+
+
+{% endblock %}

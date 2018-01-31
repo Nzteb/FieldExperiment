@@ -122,13 +122,26 @@ SESSION_CONFIGS = [
     },
 
     {
-        'name': 'fieldtrip2_no',
-        'display_name': 'fieldtrip2_no',
+        'name': 'fieldtrip2_nosanction',
+        'display_name': 'fieldtrip2_nosanction',
         'num_demo_participants': 3,
         'treatment': 'nosanction',  # 'nosanction'
         'debug': 'on',  # put 'off' on the field
         'app_sequence': ['fieldtrip2'],
+    },
+
+
+
+    {
+        'name': 'pictures',
+        'display_name': 'pictures',
+        'num_demo_participants': 3,
+        'app_sequence': ['testingpictures'],
     }
+
+
+
+
 ]
 
 # anything you put after the below line will override
