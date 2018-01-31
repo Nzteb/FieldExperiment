@@ -4,13 +4,16 @@ from .models import Constants
 
 
 class MyPage(Page):
-    form_model = 'player'
-    form_fields = ['belief_q1']
+    # form_model = 'player'
+    # form_fields = ['belief_q1']
+    pass
 
 
 class MyPage2(Page):
-    form_model = 'player'
-    form_fields = ['belief_q1']
+    def is_displayed(self):
+        return (self.round_number == 2)
+    # form_model = 'player'
+    # form_fields = ['belief_q1']
 
 class ResultsWaitPage(WaitPage):
 

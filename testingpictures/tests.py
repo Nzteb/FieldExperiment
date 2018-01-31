@@ -7,6 +7,11 @@ from .models import Constants
 class PlayerBot(Bot):
 
     def play_round(self):
-        pass
+
+        yield(pages.MyPage)
+        if self.round_number == 2:
+            yield(pages.MyPage2)
+        yield(pages.Results)
+
 
 
