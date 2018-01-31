@@ -162,9 +162,6 @@ class Elicitation2(Page):
 
 # so basically, for every round where you need one, one breakpoint class should do the job
 class DynamicBreakPoint1(Page):
-    def after_all_players_arrive(self):
-        self.player.breakpoint1 = ''
-
     def is_displayed(self):
         return  (self.round_number == 1)
     form_model = 'player'
@@ -185,8 +182,6 @@ class DynamicBreakPoint1(Page):
 
 
 class DynamicBreakPoint2(Page):
-    def after_all_players_arrive(self):
-        self.player.breakpoint1 = ''
     def is_displayed(self):
         return (self.round_number == Constants.num_rounds)
     form_model = 'player'
@@ -259,6 +254,24 @@ class GrossPayoff(Page):
 
 
 
+class DBP1WaitPage(WaitPage):
+    wait_for_all_groups = True
+    def is_displayed(self):
+        return (self.round_number == 1)
+
+
+class DBP2WaitPage(WaitPage):
+    wait_for_all_groups = True
+    def is_displayed(self):
+        return (self.round_number == Constants.num_rounds)
+
+
+class ContributionWaitPage(WaitPage):
+    wait_for_all_groups = True
+
+class BeliefWaitPage(WaitPage):
+    def is_displayed(self):
+        return (self.round_number > 1)
 
 
 
@@ -267,20 +280,26 @@ class GrossPayoff(Page):
 
 page_sequence = [
     Belief,
+    BeliefWaitPage, #this is for rounds >1 (in round 1 the breakpoint does the job)
     DynamicBreakPoint1,
+    DBP1WaitPage,
     Contribution,
+    ContributionWaitPage,
     Voting,
     BeforeResultsWaitPage,
     Results,
     DynamicBreakPoint1,
+    DBP1WaitPage,
     DynamicBreakPoint2,
+    DBP2WaitPage,
     Elicitation1,
     DynamicBreakPoint2,
+    DBP2WaitPage,
     Elicitation2,
     DynamicBreakPoint2,
+    DBP2WaitPage,
     #put questionaire pages in
     DynamicBreakPoint2,
     AdminPage,
     GrossPayoff
-
 ]

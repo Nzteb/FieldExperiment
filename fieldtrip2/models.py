@@ -271,7 +271,7 @@ class Player(BasePlayer):
 
     # 1 if area A is good in the risk elic or amb elic question.
     # note: only one of the questions is payed, so one variable here is enough
-    a_good = models.IntegerField(label='Admin, please enter 1 if area A is good in the question which is payed. Enter 0 if area A is bad',
+    a_good = models.IntegerField(label='Admin, please enter if area A is good in the question which is payed.',
                                  choices=[[1,'A is good.'],
                                           [0, 'A is bad']])
 
