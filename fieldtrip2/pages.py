@@ -60,31 +60,83 @@ class BeforeResultsWaitPage(WaitPage):
         self.subsession.set_belief_bonus()
 
 
-class Results(Page):
-    # initilize template variables to display on the page
-    # this is needed to be able to display the variables of the other players in the group
-    # some vars here are only for debug purposes
+
+class Results (Page):
     def vars_for_template(self):
-        # keys of var_dic are the variable names in the template
+        # save the player objects in a dic to be able to identify them by label
+        pl_objects = {}
+        for player in self.player.group.get_players():
+            for label in ['Player A', 'Player B', 'Player C']:
+                if player.label == label:
+                    pl_objects[label] = player
+
+        playerA = pl_objects['Player A']
+        playerB = pl_objects['Player B']
+        playerC = pl_objects['Player C']
+
         var_dic = {}
-        for player in self.group.get_players():
-            labelstripped = player.label.replace(' ', '')
 
-            var_dic[labelstripped + '_choice' ] = player.binary_choice
-            var_dic[labelstripped + '_indiv_share'] = player.indiv_share
-            var_dic[labelstripped + '_privat_account'] = player.privat_account
-            var_dic[labelstripped + '_net_payoff'] = player.net_payoff
+        if self.player.label == 'Player A':
+            var_dic['p2_choice'] = playerB.binary_choice
+            var_dic['p2_label'] = playerB.label
+            var_dic['p3_choice'] = playerC.binary_choice
+            var_dic['p3_label'] = playerC.label
+            if self.player.treatment == 'sanction':
+                var_dic['p2_bonus'] = playerB.gets_bonus
+                var_dic['p3_bonus'] = playerC.gets_bonus
+            return var_dic
 
-            if player.treatment == 'sanction':
-                var_dic[labelstripped + '_vote'] = player.vote
-                var_dic[labelstripped + '_bonus'] = player.gets_bonus
-                var_dic[labelstripped + '_bonus_amount'] = player.bonus_amount
-            else:
-                var_dic[labelstripped + '_vote'] = 'No voting in game'
-                var_dic[labelstripped + '_bonus'] = 'No bonus in game'
-                var_dic[labelstripped + '_bonus_amount'] = 'No bonus in game'
+        if self.player.label == 'Player B':
+            var_dic['p2_choice'] = playerA.binary_choice
+            var_dic['p2_label'] = playerA.label
+            var_dic['p3_choice'] = playerC.binary_choice
+            var_dic['p3_label'] = playerC.label
+            if self.player.treatment == 'sanction':
+                var_dic['p2_bonus'] = playerA.gets_bonus
+                var_dic['p3_bonus'] = playerC.gets_bonus
+            return var_dic
 
-        return var_dic
+
+        if self.player.label == 'Player C':
+            var_dic['p2_choice'] = playerA.binary_choice
+            var_dic['p2_label'] = playerA.label
+            var_dic['p3_choice'] = playerB.binary_choice
+            var_dic['p3_label'] = playerB.label
+            if self.player.treatment == 'sanction':
+                var_dic['p2_bonus'] = playerA.gets_bonus
+                var_dic['p3_bonus'] = playerB.gets_bonus
+            return var_dic
+
+
+
+
+#old version of the page, displays full debug tables and non ordering of the table
+
+# class ResultsOld(Page):
+#     # initilize template variables to display on the page
+#     # this is needed to be able to display the variables of the other players in the group
+#     # some vars here are only for debug purposes
+#     def vars_for_template(self):
+#         # keys of var_dic are the variable names in the template
+#         var_dic = {}
+#         for player in self.group.get_players():
+#             labelstripped = player.label.replace(' ', '')
+#
+#             var_dic[labelstripped + '_choice' ] = player.binary_choice
+#             var_dic[labelstripped + '_indiv_share'] = player.indiv_share
+#             var_dic[labelstripped + '_privat_account'] = player.privat_account
+#             var_dic[labelstripped + '_net_payoff'] = player.net_payoff
+#
+#             if player.treatment == 'sanction':
+#                 var_dic[labelstripped + '_vote'] = player.vote
+#                 var_dic[labelstripped + '_bonus'] = player.gets_bonus
+#                 var_dic[labelstripped + '_bonus_amount'] = player.bonus_amount
+#             else:
+#                 var_dic[labelstripped + '_vote'] = 'No voting in game'
+#                 var_dic[labelstripped + '_bonus'] = 'No bonus in game'
+#                 var_dic[labelstripped + '_bonus_amount'] = 'No bonus in game'
+#
+#         return var_dic
 
 
 class Elicitation1(Page):
@@ -199,6 +251,10 @@ class GrossPayoff(Page):
         vars_dic['rx_q3_bonus'] = rx_q3_bonus
         vars_dic['sum_rowx'] = sum_rowx
 
+
+        #gross payoff in shilling
+        vars_dic['shilling'] = self.player.gross_payoff * Constants.shilling_mult
+
         return vars_dic
 
 
@@ -222,7 +278,7 @@ page_sequence = [
     DynamicBreakPoint2,
     Elicitation2,
     DynamicBreakPoint2,
-    #put questionare pages in
+    #put questionaire pages in
     DynamicBreakPoint2,
     AdminPage,
     GrossPayoff

@@ -1,0 +1,195 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Round Results
+{% endblock %}
+
+{% block content %}
+
+
+    <br>
+
+    <b>
+    {% if player.treatment == 'sanction' %}
+        {% if group.majority_type == 1 %}
+            Rule executed:&nbsp;&nbsp;&nbsp;&nbsp; <img class="rulepic" src="{% static "fieldtrip2/keeperexcluded.png" %}"> <br>
+        {% elif group.majority_type == 2 %}
+            Rule executed:&nbsp;&nbsp;&nbsp;&nbsp; <img class="rulepic" src="{% static "fieldtrip2/giverexcluded.png" %}"> <br>
+        {% elif group.majority_type == 3 %}
+            Rule executed:&nbsp;&nbsp;&nbsp;&nbsp; <img class="rulepic" src="{% static "fieldtrip2/nooneexcluded.png" %}"><br>
+        {% else %}
+            There was no majority. Rule executed: <img class="rulepic" src="{% static "fieldtrip2/nooneexcluded.png" %}">  <br>
+        {% endif %}
+    {% endif %}
+    </b>
+
+    <br><br>
+    Table of results
+    <div id="main">
+    <table class="table">
+        <tr>
+            <th><b>Player</b></th>
+            <th><b>Decision</b></th>
+            {% if player.treatment == 'sanction' %}<th><b>Bonus</b></th>{% endif %}
+        </tr>
+
+
+        <tr>
+            <th>{% if player.label == 'Player A'%} <p style="color: blue">You</p> {% else %} Player A</p> {% endif %}</th>
+            <th>{% if PlayerA_choice == 1%} <img class="tablepic" src="{% static "fieldtrip2/keep.png" %}"> {% else %}<img class="tablepic" src="{% static "fieldtrip2/give.png" %}">{% endif %}</th>
+            {% if player.treatment == 'sanction' %}<th>{% if PlayerA_bonus == 1%}<img class="tablepic" src="{% static "fieldtrip2/yes.png" %}">{% else %}<img class="tablepic" src="{% static "fieldtrip2/no.png" %}">{% endif %}</th>{% endif %}
+        </tr>
+
+        <tr>
+            <th>{% if player.label == 'Player B'%} <p style="color: blue">You</p> {% else %} Player B {% endif %}</th>
+            <th>{% if PlayerB_choice == 1%} <img class="tablepic" src="{% static "fieldtrip2/keep.png" %}"> {% else %}<img class="tablepic" src="{% static "fieldtrip2/give.png" %}">{% endif %}</th>
+            {% if player.treatment == 'sanction' %}<th>{% if PlayerB_bonus == 1%}<img class="tablepic" src="{% static "fieldtrip2/yes.png" %}">{% else %}<img class="tablepic" src="{% static "fieldtrip2/no.png" %}">{% endif %}</th>{% endif %}
+        </tr>
+
+
+        <tr>
+            <th>{% if player.label == 'Player C'%} <p style="color: blue">You</p> {% else %} Player C <p>{% endif %}</p></th>
+            <th>{% if PlayerC_choice == 1%} <img class="tablepic" src="{% static "fieldtrip2/keep.png" %}"> {% else %}<img class="tablepic" src="{% static "fieldtrip2/give.png" %}">{% endif %}</th>
+            {% if player.treatment == 'sanction' %}<th>{% if PlayerC_bonus == 1%}<img class="tablepic" src="{% static "fieldtrip2/yes.png" %}">{% else %}<img class="tablepic" src="{% static "fieldtrip2/no.png" %}">{% endif %}</th>{% endif %}
+        </tr>
+    </table>
+    <br>
+    <b>Your total points: {{ player.net_payoff }} </b>
+
+    </div>
+
+    <br><br>
+    {% next_button %}
+
+    {% if subsession.debug == 'on' %}
+
+        <br><br><br>
+        ----------------------------------------------------------------------------------------------------------------------------<br>
+        (Debug from Patrick. Set debug='off' in SESSION_CONFIGS in settings.py , to not display this anymore)<br>
+
+        Check these calculations:<br>
+        Most player have chosen decision {{ subsession.frequent_binary_choice }} for the contribution game. (1: keeping 2: giving)<br>
+        Your belief was, most player would choose {{ player.belief_q3 }} <br>
+        Points, that are tracked for you from answering the question: {{ player.q3_bonus }}<br>
+
+        <br>
+        (If round_number > 1 no numbers should be displayed now)<br>
+        Most players believe others believe decision {{ subsession.frequent_binary_belief }} is best. (Question 2) <br>
+        You thought most players would believe {{ player.belief_q2 }} is best.<br> (Question 2)
+        Points that are tracked for you from answering the question: {{ player.q2_bonus }}<br>
+
+
+
+          <br><br>
+          <table class="table">
+            <tr>
+                <th><b>Player</b></th>
+                <th><b>Binary Decision</b></th>
+                <th><b>Voted For</b></th>
+                <th><b>Gets Bonus</b></th>
+            </tr>
+
+
+            <tr>
+                <th>{% if player.label == 'Player A'%} <p style="color: blue">You</p> {% else %} Player A</p> {% endif %}</th>
+                <th>{% if player.label == 'Player A'%} <p style="color: blue">{{ PlayerA_choice }}</p> {% else %}<p>{{ PlayerA_choice }}</p>{% endif %}</th>
+                <th>{% if player.label == 'Player A'%} <p style="color: blue"> {{ PlayerA_vote }}</p> {% else %}<p>{{ PlayerA_vote }}</p>{% endif %}</th>
+                <th>{% if player.label == 'Player A'%} <p style="color: blue">{{ PlayerA_bonus }}</p> {% else %}<p>{{ PlayerA_bonus }}</p>{% endif %}</th>
+            </tr>
+
+            <tr>
+                <th>{% if player.label == 'Player B'%} <p style="color: blue">You</p> {% else %} Player B {% endif %}</th>
+                <th>{% if player.label == 'Player B'%} <p style="color: blue">{{ PlayerB_choice }}</p> {% else %}<p>{{ PlayerB_choice }}</p>{% endif %}</th>
+                <th>{% if player.label == 'Player B'%} <p style="color: blue">{{ PlayerB_vote }}</p> {% else %}<p>{{ PlayerB_vote }}</p>{% endif %}</th>
+                <th>{% if player.label == 'Player B'%} <p style="color: blue">{{ PlayerB_bonus }}</p> {% else %}<p>{{ PlayerB_bonus }}</p>{% endif %}</th>
+            </tr>
+
+
+            <tr>
+                <th>{% if player.label == 'Player C'%} <p style="color: blue">You</p> {% else %} Player C <p>{% endif %}</p></th>
+                <th>{% if player.label == 'Player C'%} <p style="color: blue">{{ PlayerC_choice }}</p> {% else %}<p>{{ PlayerC_choice }}</p>{% endif %}</th>
+                <th>{% if player.label == 'Player C'%} <p style="color: blue">{{ PlayerC_vote }}</p> {% else %}<p>{{ PlayerC_vote }}</p>{% endif %}</th>
+                <th>{% if player.label == 'Player C'%} <p style="color: blue">{{ PlayerC_bonus }}</p> {% else %}<p>{{ PlayerC_bonus }}</p>{% endif %}</th>
+            </tr>
+        </table>
+
+
+
+        <br><br>
+
+            <table class="table">
+            <tr>
+                <th><b>Player Label</b></th>
+                <th><b>Privat Account</b></th>
+                <th><b>Group Account</b></th>
+                <th><b>Share from Group Account</b></th>
+                <th><b>Bonus</b></th>
+                <th><b>Points this round</b></th>
+            </tr>
+
+            <tr>
+                <th>{% if player.label == 'Player A'%} <p style="color: blue">You</p> {% else %} Player A</p> {% endif %}</th>
+                <th>{% if player.label == 'Player A'%} <p style="color: blue">{{ PlayerA_privat_account }}</p> {% else %}<p>{{ PlayerA_privat_account }}</p>{% endif %}</th>
+                <th>{% if player.label == 'Player A'%} <p style="color: blue">{{ group.group_account }}</p> {% else %}<p>{{ group.group_account }}</p>{% endif %}</th>
+                <th>{% if player.label == 'Player A'%} <p style="color: blue">{{ PlayerA_indiv_share }}</p> {% else %}<p>{{ PlayerA_indiv_share }}</p>{% endif %}</th>
+                <th>{% if player.label == 'Player A'%} <p style="color: blue"> {{ PlayerA_bonus_amount }}</p> {% else %}<p>{{ PlayerA_bonus_amount }}</p>{% endif %}</th>
+                <th>{% if player.label == 'Player A'%} <p style="color: blue"> {{ PlayerA_net_payoff }}</p> {% else %}<p>{{ PlayerA_net_payoff }}</p>{% endif %}</th>
+            </tr>
+
+            <tr>
+                <th>{% if player.label == 'Player B'%} <p style="color: blue">You</p> {% else %} Player B {% endif %}</th>
+                <th>{% if player.label == 'Player B'%} <p style="color: blue">{{ PlayerB_privat_account }}</p> {% else %}<p>{{ PlayerB_privat_account }}</p>{% endif %}</th>
+                <th>{% if player.label == 'Player B'%} <p style="color: blue">{{ group.group_account }}</p> {% else %}<p>{{ group.group_account }}</p>{% endif %}</th>
+                <th>{% if player.label == 'Player B'%} <p style="color: blue">{{ PlayerB_indiv_share }}</p> {% else %}<p>{{ PlayerB_indiv_share }}</p>{% endif %}</th>
+                <th>{% if player.label == 'Player B'%} <p style="color: blue">{{ PlayerB_bonus_amount }}</p> {% else %}<p>{{ PlayerB_bonus_amount }}</p>{% endif %}</th>
+                <th>{% if player.label == 'Player B'%} <p style="color: blue"> {{ PlayerB_net_payoff }}</p> {% else %}<p>{{ PlayerB_net_payoff }}</p>{% endif %}</th>
+            </tr>
+
+            <tr>
+                <th>{% if player.label == 'Player C'%} <p style="color: blue">You</p> {% else %} Player C <p>{% endif %}</p></th>
+                <th>{% if player.label == 'Player C'%} <p style="color: blue">{{ PlayerC_privat_account }}</p> {% else %}<p>{{ PlayerC_privat_account }}</p>{% endif %}</th>
+                <th>{% if player.label == 'Player C'%} <p style="color: blue">{{ group.group_account }}</p> {% else %}<p>{{ group.group_account }}</p>{% endif %}</th>
+                <th>{% if player.label == 'Player C'%} <p style="color: blue">{{ PlayerC_indiv_share }}</p> {% else %}<p>{{ PlayerC_indiv_share }}</p>{% endif %}</th>
+                <th>{% if player.label == 'Player C'%} <p style="color: blue">{{ PlayerC_bonus_amount }}</p> {% else %}<p>{{ PlayerC_bonus_amount }}</p>{% endif %}</th>
+                <th>{% if player.label == 'Player C'%} <p style="color: blue"> {{ PlayerC_net_payoff }}</p> {% else %}<p>{{ PlayerC_net_payoff }}</p>{% endif %}</th>
+            </tr>
+        </table>
+
+    {% endif %}
+
+
+{% endblock %}
+
+
+
+{% block styles %}
+
+
+    <style type="text/css">
+
+
+        .rulepic{
+            width:9em;
+            height:7em;
+        }
+
+        .tablepic{
+            width:6em;
+            height:4em;
+        }
+
+
+        label {
+            float: left;
+            padding: 0 1em;
+            text-align: center;
+        }
+
+    </style>
+
+
+{% endblock %}
+
+
+
