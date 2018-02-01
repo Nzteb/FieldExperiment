@@ -85,9 +85,9 @@ class Subsession(BaseSubsession):
         else:
             self.frequent_binary_choice = 2
 
-     # this calculates the most frequent belief of the players in round 1 from belief_q2
-     # is needed to evalute the correctness of belief_q2 itself in round 1
-     # 1: most player belief keeping is the correct thing; 2: most player belief giving is the correct thing 3: what others do
+    # this calculates the most frequent belief of the players in round 1 from belief_q2
+    # is needed to evalute the correctness of belief_q2 itself in round 1
+    # 1: most player belief keeping is the correct thing; 2: most player belief giving is the correct thing 3: what others do
     def set_frequent_binary_belief(self):
         decdoc = {1:0 , 2:0, 3:0}
         for player in self.get_players():
@@ -182,6 +182,29 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
+
+    # before the one shot pg the participants get 4 situations, which they have to evaluate correctly
+    # their guess of the correct payoff of the left guys in picture 1
+    # s1 for situation 1
+    s1_group_left = models.IntegerField()
+    s1_group_right = models.IntegerField()
+    # 1 if the player tried again in situation 1
+    # TODO: how to interpret this and sort out the guys who had two fails
+    # TODO: if a player has tryagain == True and the values of the variable are still wrong, then he could not answer the question
+    # TODO: I could put this in the database, but I dont want to blow it even more
+    s1_tryagain = models.BooleanField(initial=False)
+
+    s2_group = models.IntegerField()
+    s2_tryagain = models.BooleanField(initial=False)
+
+    s3_group_left = models.IntegerField()
+    s3_group_right = models.IntegerField()
+    s3_tryagain = models.BooleanField(initial=False)
+
+    s4_group = models.IntegerField()
+    s4_tryagain = models.BooleanField(initial=False)
+
+
 
     # variables to train the participants using the tablets as first pages of the experiment
     test_number = models.IntegerField(label='')

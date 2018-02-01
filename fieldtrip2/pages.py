@@ -3,7 +3,7 @@ from ._builtin import Page, WaitPage
 from .models import Constants
 
 
-#t let the participants train how to use a tablet
+# let the participants train how to use a tablet
 class TestingParticipant(Page):
     def is_displayed(self):
         return (self.round_number == 1)
@@ -24,8 +24,65 @@ class TestingParticipant(Page):
     form_fields = ['test_number', 'test_choice', 'test_slider']
 
 
+class Situation1(Page):
+    def is_displayed(self):
+        return (self.round_number == 1)
+    form_model = 'player'
+    form_fields = ['s1_group_left', 's1_group_right']
+
+    def error_message(self, values):
+        if values['s1_group_left'] != 4 or values['s1_group_right'] != 7 :
+            if self.player.s1_tryagain == False:
+                self.player.s1_tryagain = True
+                return 'Please try again'
+            else:
+                pass #as it is the 2nd try of the player, let him pass the page anyway
 
 
+class Situation2(Page):
+    def is_displayed(self):
+        return (self.round_number == 1)
+
+    form_model = 'player'
+    form_fields = ['s2_group']
+
+    def s2_group_error_message(self, value):
+        if value != 3:
+            if self.player.s2_tryagain == False:
+                self.player.s2_tryagain = True
+                return 'Please try again.'
+            else:
+                pass #let him pass anyway as it is second try
+
+class Situation3(Page):
+    def is_displayed(self):
+        return (self.round_number == 1)
+
+    form_model = 'player'
+    form_fields = ['s3_group_left' , 's3_group_right']
+
+    def error_message(self, values):
+        if values['s3_group_left'] != 2 or values['s3_group_right'] != 5:
+            if self.player.s3_tryagain == False:
+                self.player.s3_tryagain = True
+                return 'Please try again'
+            else:
+                pass  # as it is the 2nd try of the player, let him pass the page anyway
+
+class Situation4(Page):
+    def is_displayed(self):
+        return False #(self.round_number == 1)
+
+    form_model = 'player'
+    form_fields = ['s4_group']
+
+    def s4_group_error_message(self, value):
+        if value != 6:
+            if self.player.s4_tryagain == False:
+                self.player.s4_tryagain = True
+                return 'Please try again.'
+            else:
+                pass
 
 
 # note: you also have to condition in the template e.g. you cannot have belief_q2 in round 2 there
@@ -311,6 +368,10 @@ class TestingParWaitPage(WaitPage):
 page_sequence = [
     TestingParticipant,
     TestingParWaitPage,
+    Situation1,
+    Situation2,
+    Situation3,
+    Situation4,
     Belief,
     BeliefWaitPage, #this is for rounds >1 (in round 1 the breakpoint does the job)
     DynamicBreakPoint1,
