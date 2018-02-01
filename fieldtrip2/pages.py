@@ -3,6 +3,31 @@ from ._builtin import Page, WaitPage
 from .models import Constants
 
 
+#t let the participants train how to use a tablet
+class TestingParticipant(Page):
+    def is_displayed(self):
+        return (self.round_number == 1)
+
+    def test_number_error_message(self, value):
+        if value != 20:
+            return 'Please enter the number 20.'
+
+    def test_choice_error_message(self, value):
+        if value != 'A':
+            return 'Please choose picture A.'
+
+    def test_slider_error_message(self, value):
+        if value != 30:
+            return 'Please choose the value 30'
+
+    form_model = 'player'
+    form_fields = ['test_number', 'test_choice', 'test_slider']
+
+
+
+
+
+
 # note: you also have to condition in the template e.g. you cannot have belief_q2 in round 2 there
 class Belief(Page):
     form_model = 'player'
@@ -273,12 +298,19 @@ class BeliefWaitPage(WaitPage):
     def is_displayed(self):
         return (self.round_number > 1)
 
+class TestingParWaitPage(WaitPage):
+    wait_for_all_groups = True
+    def is_displayed(self):
+        return (self.round_number == 1)
+
 
 
 
 
 
 page_sequence = [
+    TestingParticipant,
+    TestingParWaitPage,
     Belief,
     BeliefWaitPage, #this is for rounds >1 (in round 1 the breakpoint does the job)
     DynamicBreakPoint1,

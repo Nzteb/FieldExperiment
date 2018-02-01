@@ -1,0 +1,55 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+
+
+{% block content %}
+
+    <div id="main">
+
+        Please choose picture A <br><br>
+        <label id="label1" for="value1"><img class="pic" src="{% static "fieldtrip2/A.png" %}"><br>
+            <input type="radio" name="test_choice" id="value1" value='A' required></label>
+
+        <label id="label2" for="value2"><img class="pic" src="{% static "fieldtrip2/B.png" %}"><br>
+            <input type="radio" name="test_choice" id="value2" value='B' required></label>
+        <br><br><br><br><br><br><br><br><br>
+
+        Please enter the number 20<br><br>
+        {% formfield player.test_number %}
+            <br><br>
+        Please choose the number 30 <br><br>
+        {% formfield player.test_slider %}
+            <br>
+
+
+    </div>
+
+
+    {% next_button %}
+{% endblock %}
+
+
+{% block styles %}
+
+
+    <style type="text/css">
+
+        .pic{
+            width:9em;
+            height:8em;
+        }
+
+
+        label {
+            float: left;
+            padding: 0 1em;
+            text-align: center;
+        }
+
+    </style>
+
+
+{% endblock %}
+
+

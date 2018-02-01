@@ -2,6 +2,8 @@ from otree.api import (
     models, widgets, BaseConstants, BaseSubsession, BaseGroup, BasePlayer,
     Currency as c, currency_range
 )
+from django import forms
+from django.forms import widgets as widgets2
 
 
 author = 'Your name here'
@@ -32,6 +34,16 @@ class Player(BasePlayer):
                                     choices=[[1, 'Keep points in the private account'],
                                              [2, 'Put points to the group account?'],
                                              [3, 'Do, what others do.']], )
+
+
+
+    whomonitor = forms.MultipleChoiceField(
+        choices=['Police/military', 'Fisheries officers', 'BMU/fishers', 'No one'],
+        widget=widgets2.CheckboxSelectMultiple(),
+        label="Who monitors compliance in your area?",
+    )
+
+
 
 
 

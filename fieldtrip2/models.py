@@ -183,10 +183,21 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
 
+    # variables to train the participants using the tablets as first pages of the experiment
+    test_number = models.IntegerField(label='')
+    test_choice = models.StringField(label='',
+                                      widget=widgets.RadioSelect(),
+                                      choices=['A', 'B'])
+    test_slider = models.IntegerField(widget=widgets.Slider(),
+                                      label='')
+
+
+
+    #tracks which breakpoint to use in oTree round 7
     breakpointcounter2 = models.IntegerField(initial=1)
     breakpoint2 = models.IntegerField(label='Enter code here:')
 
-    # tracks which breakpoint code to use
+    # tracks which breakpoint code to use in oTree round 1
     breakpointcounter1 = models.IntegerField(initial=1)
     breakpoint1 = models.IntegerField(label='Enter code here:')
 

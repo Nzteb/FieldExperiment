@@ -6,14 +6,14 @@ from .models import Constants
 class MyPage(Page):
     # form_model = 'player'
     # form_fields = ['belief_q1']
-    pass
+    form_model = 'player'
+    form_fields = ['belief_q1','whomonitor']
 
 
 class MyPage2(Page):
     def is_displayed(self):
         return (self.round_number == 2)
-    # form_model = 'player'
-    # form_fields = ['belief_q1']
+
 
 class ResultsWaitPage(WaitPage):
 
