@@ -1,9 +1,9 @@
 {% extends "global/Page.html" %}
 {% load staticfiles otree %}
 
-{% block title %}
-    Round Results
-{% endblock %}
+{#{% block title %}#}
+{#    Round Results#}
+{#{% endblock %}#}
 
 {% block content %}
 
@@ -19,20 +19,20 @@
         {% elif group.majority_type == 3 %}
             Rule executed:&nbsp;&nbsp;&nbsp;&nbsp; <img class="rulepic" src="{% static "fieldtrip2/nooneexcluded.png" %}"><br>
         {% else %}
-            There was no majority. Rule executed: <img class="rulepic" src="{% static "fieldtrip2/nooneexcluded.png" %}">  <br>
+            Rule executed: <img class="rulepic" src="{% static "fieldtrip2/nooneexcluded.png" %}">  <br>
         {% endif %}
     {% endif %}
     </b>
 
     <br><br>
-    Table of results
+
     <div id="main">
     <table class="table">
-        <tr>
-            <th><b>Player</b></th>
-            <th><b>Decision</b></th>
-            {% if player.treatment == 'sanction' %}<th><b>Bonus</b></th>{% endif %}
-        </tr>
+{#        <tr>#}
+{#            <th><b>Player</b></th>#}
+{#            <th><b>Decision</b></th>#}
+{#            {% if player.treatment == 'sanction' %}<th><b>Bonus</b></th>{% endif %}#}
+{#        </tr>#}
 
 
         <tr>
@@ -55,7 +55,7 @@
         </tr>
     </table>
     <br>
-    <b>Your total points: {{ player.net_payoff }} </b>
+
 
     </div>
 

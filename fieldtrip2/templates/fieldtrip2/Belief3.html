@@ -1,0 +1,47 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{#{% block title %}#}
+{#    Belief#}
+{#{% endblock %}#}
+
+{% block content %}
+
+    <div id="main">
+
+
+            What do you guess most group members in this session would actually do?<br><br>
+            <label id="label7" for="value7"><img src="{% static "fieldtrip2/keep.png" %}"><br>
+            <input type="radio" name="belief_q3" id="value7" value=1 ></label>
+            <label id="label8" for="value8"><img src="{% static "fieldtrip2/give.png" %}"><br>
+            <input type="radio" name="belief_q3" id="value8" value=2 ></label><br>
+
+    </div>
+
+    <br><br><br><br><br><br>
+    {% next_button %}
+{% endblock %}
+
+{% block styles %}
+
+
+    <style type="text/css">
+
+        img{
+            width:9em;
+            height:8em;
+        }
+
+
+        label {
+            float: left;
+            padding: 0 1em;
+            text-align: center;
+        }
+
+    </style>
+
+
+{% endblock %}
+
+

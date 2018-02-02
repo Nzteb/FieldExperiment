@@ -197,11 +197,11 @@ class Player(BasePlayer):
     s2_group = models.IntegerField()
     s2_tryagain = models.BooleanField(initial=False)
 
-    s3_group_left = models.IntegerField()
-    s3_group_right = models.IntegerField()
+    s3_group = models.IntegerField()
     s3_tryagain = models.BooleanField(initial=False)
 
-    s4_group = models.IntegerField()
+    s4_group_left = models.IntegerField()
+    s4_group_right = models.IntegerField()
     s4_tryagain = models.BooleanField(initial=False)
 
 
@@ -211,7 +211,7 @@ class Player(BasePlayer):
     test_choice = models.StringField(label='',
                                       widget=widgets.RadioSelect(),
                                       choices=['A', 'B'])
-    test_slider = models.IntegerField(widget=widgets.Slider(),
+    test_slider = models.IntegerField(widget=widgets.Slider(), max=10,
                                       label='')
 
 

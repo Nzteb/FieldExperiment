@@ -1,0 +1,50 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{#{% block title %}#}
+{#    Belief#}
+{#{% endblock %}#}
+
+{% block content %}
+
+    <div id="main">
+
+
+        What do you think is the right thing one ought to do? <br><br>
+        <label id="label1" for="value1"><img src="{% static "fieldtrip2/keep.png" %}"><br>
+            <input type="radio" name="belief_q1" id="value1" value=1 ></label>
+        <label id="label2" for="value2"><img src="{% static "fieldtrip2/give.png" %}"><br>
+            <input type="radio" name="belief_q1" id="value2" value=2 ></label>
+        <label id="label3" for="value3"><img src="{% static "fieldtrip2/whatothersdo.png" %}"><br>
+            <input type="radio" name="belief_q1" id="value3" value=3 ></label><br>
+
+
+    </div>
+
+    <br><br><br><br><br><br>
+    {% next_button %}
+{% endblock %}
+
+{% block styles %}
+
+
+    <style type="text/css">
+
+        img{
+            width:9em;
+            height:8em;
+        }
+
+
+        label {
+            float: left;
+            padding: 0 1em;
+            text-align: center;
+        }
+
+    </style>
+
+
+{% endblock %}
+
+

@@ -1,9 +1,9 @@
 {% extends "global/Page.html" %}
 {% load staticfiles otree %}
 
-{% block title %}
-    Vote Stage
-{% endblock %}
+{#{% block title %}#}
+{#    Vote Stage#}
+{#{% endblock %}#}
 
 {% block content %}
 
@@ -16,11 +16,11 @@
         <br><br><br>
 
         <label id="label1" for="value1">Exclude Keeper<br><img src="{% static "fieldtrip2/keeperexcluded.png" %}"><br>
-            <input type="radio" name="vote" id="value1" value=1 required></label>
+            <input type="radio" name="vote" id="value1" value=1></label>
         <label id="label1" for="value2">Exclude Giver<br><img src="{% static "fieldtrip2/giverexcluded.png" %}"><br>
-            <input type="radio" name="vote" id="value2" value=2 required></label>
+            <input type="radio" name="vote" id="value2" value=2></label>
         <label id="label1" for="value3">Exclude no one<br><img src="{% static "fieldtrip2/nooneexcluded.png" %}"><br>
-            <input type="radio" name="vote" id="value3" value=3 required></label><br>
+            <input type="radio" name="vote" id="value3" value=3></label><br>
 
             <br><br><br><br><br><br><br><br>
 

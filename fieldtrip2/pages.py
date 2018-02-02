@@ -17,26 +17,32 @@ class TestingParticipant(Page):
             return 'Please choose picture A.'
 
     def test_slider_error_message(self, value):
-        if value != 30:
-            return 'Please choose the value 30'
+        if value != 7:
+            return 'Please choose the value 5'
 
     form_model = 'player'
     form_fields = ['test_number', 'test_choice', 'test_slider']
 
 
+
 class Situation1(Page):
     def is_displayed(self):
         return (self.round_number == 1)
+
     form_model = 'player'
-    form_fields = ['s1_group_left', 's1_group_right']
+    form_fields = ['s1_group_left' , 's1_group_right']
 
     def error_message(self, values):
-        if values['s1_group_left'] != 4 or values['s1_group_right'] != 7 :
+        if values['s1_group_left'] != 2 or values['s1_group_right'] != 5:
             if self.player.s1_tryagain == False:
                 self.player.s1_tryagain = True
                 return 'Please try again'
             else:
-                pass #as it is the 2nd try of the player, let him pass the page anyway
+                pass  # as it is the 2nd try of the player, let him pass the page anyway
+
+class Solution1(Page):
+    def is_displayed(self):
+        return (self.round_number == 1)
 
 
 class Situation2(Page):
@@ -54,47 +60,69 @@ class Situation2(Page):
             else:
                 pass #let him pass anyway as it is second try
 
+class Solution2(Page):
+    def is_displayed(self):
+        return (self.round_number == 1)
+
+
 class Situation3(Page):
     def is_displayed(self):
         return (self.round_number == 1)
 
     form_model = 'player'
-    form_fields = ['s3_group_left' , 's3_group_right']
+    form_fields = ['s3_group']
 
-    def error_message(self, values):
-        if values['s3_group_left'] != 2 or values['s3_group_right'] != 5:
+    def s3_group_error_message(self, value):
+        if value != 6:
             if self.player.s3_tryagain == False:
                 self.player.s3_tryagain = True
+                return 'Please try again.'
+            else:
+                pass #pass anyway
+
+class Solution3(Page):
+    def is_displayed(self):
+        return (self.round_number == 1)
+
+
+
+class Situation4(Page):
+    def is_displayed(self):
+        return (self.round_number == 1)
+
+    form_model = 'player'
+    form_fields = ['s4_group_left', 's4_group_right']
+
+    def error_message(self, values):
+        if values['s4_group_left'] != 4 or values['s4_group_right'] != 7:
+            if self.player.s4_tryagain == False:
+                self.player.s4_tryagain = True
                 return 'Please try again'
             else:
                 pass  # as it is the 2nd try of the player, let him pass the page anyway
 
-class Situation4(Page):
+class Solution4(Page):
     def is_displayed(self):
-        return False #(self.round_number == 1)
+        return (self.round_number == 1)
 
+
+class Belief1(Page):
+    def is_displayed(self):
+        return (self.round_number == 1)
     form_model = 'player'
-    form_fields = ['s4_group']
+    form_fields = ['belief_q1']
 
-    def s4_group_error_message(self, value):
-        if value != 6:
-            if self.player.s4_tryagain == False:
-                self.player.s4_tryagain = True
-                return 'Please try again.'
-            else:
-                pass
-
-
-# note: you also have to condition in the template e.g. you cannot have belief_q2 in round 2 there
-class Belief(Page):
+class Belief2(Page):
+    def is_displayed(self):
+        return (self.round_number == 1)
     form_model = 'player'
-    def get_form_fields(self):
-        if self.player.round_number == 1:
-            return ['belief_q1', 'belief_q2', 'belief_q3']
-        elif self.player.round_number > 1:
-            return ['belief_q3']
-        else:
-            print('Never see me..')
+    form_fields = ['belief_q2']
+
+class Belief3(Page):
+    form_model = 'player'
+    form_fields = ['belief_q3']
+
+
 
 
 class Contribution(Page):
@@ -143,7 +171,7 @@ class BeforeResultsWaitPage(WaitPage):
 
 
 
-class Results (Page):
+class Results1 (Page):
     def vars_for_template(self):
         # save the player objects in a dic to be able to identify them by label
         pl_objects = {}
@@ -189,6 +217,10 @@ class Results (Page):
                 var_dic['p3_bonus'] = playerB.gets_bonus
             return var_dic
 
+
+class Results2 (Page):
+    def vars_for_template(self):
+        return {'points': self.player.indiv_share + self.player.privat_account}
 
 
 
@@ -369,10 +401,16 @@ page_sequence = [
     TestingParticipant,
     TestingParWaitPage,
     Situation1,
+    Solution1,
     Situation2,
+    Solution2,
     Situation3,
+    Solution3,
     Situation4,
-    Belief,
+    Solution4,
+    Belief1,
+    Belief2,
+    Belief3,
     BeliefWaitPage, #this is for rounds >1 (in round 1 the breakpoint does the job)
     DynamicBreakPoint1,
     DBP1WaitPage,
@@ -380,7 +418,8 @@ page_sequence = [
     ContributionWaitPage,
     Voting,
     BeforeResultsWaitPage,
-    Results,
+    Results1,
+    Results2,
     DynamicBreakPoint1,
     DBP1WaitPage,
     DynamicBreakPoint2,
