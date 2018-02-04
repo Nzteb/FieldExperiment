@@ -18,7 +18,7 @@ class TestingParticipant(Page):
 
     def test_slider_error_message(self, value):
         if value != 7:
-            return 'Please choose the value 5'
+            return 'Please choose the value 7'
 
     form_model = 'player'
     form_fields = ['test_number', 'test_choice', 'test_slider']

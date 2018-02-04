@@ -6,20 +6,16 @@
 {#{% endblock %}#}
 
 {% block content %}
-
-
-    <br>
-
     <b>
     {% if player.treatment == 'sanction' %}
         {% if group.majority_type == 1 %}
-            Rule executed:&nbsp;&nbsp;&nbsp;&nbsp; <img class="rulepic" src="{% static "fieldtrip2/keeperexcluded.png" %}"> <br>
+            Rule executed:<br> <img class="rulepic" src="{% static "fieldtrip2/keeperexcluded.png" %}"> <br>
         {% elif group.majority_type == 2 %}
-            Rule executed:&nbsp;&nbsp;&nbsp;&nbsp; <img class="rulepic" src="{% static "fieldtrip2/giverexcluded.png" %}"> <br>
+            Rule executed:<br> <img class="rulepic" src="{% static "fieldtrip2/giverexcluded.png" %}"> <br>
         {% elif group.majority_type == 3 %}
-            Rule executed:&nbsp;&nbsp;&nbsp;&nbsp; <img class="rulepic" src="{% static "fieldtrip2/nooneexcluded.png" %}"><br>
+            Rule executed:<br> <img class="rulepic" src="{% static "fieldtrip2/nooneexcluded.png" %}"><br>
         {% else %}
-            Rule executed: <img class="rulepic" src="{% static "fieldtrip2/nooneexcluded.png" %}">  <br>
+            Rule executed:<br> <img class="rulepic" src="{% static "fieldtrip2/nooneexcluded.png" %}">  <br>
         {% endif %}
     {% endif %}
     </b>
@@ -36,7 +32,7 @@
 
 
         <tr>
-            <th><p style="color: blue">You</p></th>
+            <th><p style="color: blue; font-size: 45px;">You</p></th>
             <th>{% if player.binary_choice == 1%} <img class="tablepic" src="{% static "fieldtrip2/keep.png" %}"> {% else %}<img class="tablepic" src="{% static "fieldtrip2/give.png" %}">{% endif %}</th>
             {% if player.treatment == 'sanction' %}<th>{% if player.gets_bonus == 1%}<img class="tablepic" src="{% static "fieldtrip2/yes.png" %}">{% else %}<img class="tablepic" src="{% static "fieldtrip2/no.png" %}">{% endif %}</th>{% endif %}
         </tr>
@@ -54,12 +50,8 @@
             {% if player.treatment == 'sanction' %}<th>{% if p3_bonus == 1%}<img class="tablepic" src="{% static "fieldtrip2/yes.png" %}">{% else %}<img class="tablepic" src="{% static "fieldtrip2/no.png" %}">{% endif %}</th>{% endif %}
         </tr>
     </table>
-    <br>
-
-
     </div>
 
-    <br><br>
     {% next_button %}
 
     {% if subsession.debug == 'on' %}
@@ -93,13 +85,13 @@
 
 
         .rulepic{
-            width:9em;
-            height:7em;
+            width:19em;
+            height:16em;
         }
 
         .tablepic{
-            width:6em;
-            height:4em;
+            width:8em;
+            height:5.5em;
         }
 
 

@@ -347,7 +347,7 @@ class Player(BasePlayer):
         elif self.treatment == 'nosanction':
             self.net_payoff = self.privat_account + self.indiv_share
 
-
+    # you dont need to condition on treatment here because this in done in calc_net_payoff
     def calc_gross_payoff(self):
         instance_in_os = self.in_round(1)
         instance_in_rx = self.in_round(self.round_payed+1)
