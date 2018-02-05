@@ -16,29 +16,22 @@ class TestingParticipant(Page):
         if value != 'A':
             return 'Please choose picture A.'
 
-    def test_slider_error_message(self, value):
-        if value != 7:
-            return 'Please choose the value 7'
-
     form_model = 'player'
-    form_fields = ['test_number', 'test_choice', 'test_slider']
+    form_fields = ['test_number', 'test_choice']
 
 
 
 class Situation1(Page):
     def is_displayed(self):
-        return (self.round_number == 1)
-
+        return (self.round_number == 1 and self.player.s1_correct == False)
     form_model = 'player'
     form_fields = ['s1_group_left' , 's1_group_right']
 
-    def error_message(self, values):
-        if values['s1_group_left'] != 2 or values['s1_group_right'] != 5:
-            if self.player.s1_tryagain == False:
-                self.player.s1_tryagain = True
-                return 'Please try again'
-            else:
-                pass  # as it is the 2nd try of the player, let him pass the page anyway
+    def before_next_page(self):
+        if self.player.s1_group_left != 2 or self.player.s1_group_right != 5:
+            self.player.s1_falsetries += 1
+        elif self.player.s1_group_left == 2 or self.player.s1_group_right == 5:
+            self.player.s1_correct = True
 
 class Solution1(Page):
     def is_displayed(self):
@@ -47,18 +40,16 @@ class Solution1(Page):
 
 class Situation2(Page):
     def is_displayed(self):
-        return (self.round_number == 1)
+        return (self.round_number == 1 and self.player.s2_correct == False)
 
     form_model = 'player'
     form_fields = ['s2_group']
 
-    def s2_group_error_message(self, value):
-        if value != 3:
-            if self.player.s2_tryagain == False:
-                self.player.s2_tryagain = True
-                return 'Please try again.'
-            else:
-                pass #let him pass anyway as it is second try
+    def before_next_page(self):
+        if self.player.s2_group != 3:
+            self.player.s2_falsetries += 1
+        elif self.player.s2_group == 3:
+            self.player.s2_correct = True
 
 class Solution2(Page):
     def is_displayed(self):
@@ -67,44 +58,56 @@ class Solution2(Page):
 
 class Situation3(Page):
     def is_displayed(self):
-        return (self.round_number == 1)
+        return (self.round_number == 1 and self.player.s3_correct == False)
 
     form_model = 'player'
     form_fields = ['s3_group']
 
-    def s3_group_error_message(self, value):
-        if value != 6:
-            if self.player.s3_tryagain == False:
-                self.player.s3_tryagain = True
-                return 'Please try again.'
-            else:
-                pass #pass anyway
+    def before_next_page(self):
+        if self.player.s3_group != 6:
+            self.player.s3_falsetries += 1
+        elif self.player.s3_group == 6:
+            self.player.s3_correct = True
 
 class Solution3(Page):
     def is_displayed(self):
         return (self.round_number == 1)
 
-
-
 class Situation4(Page):
     def is_displayed(self):
-        return (self.round_number == 1)
-
+        return (self.round_number == 1 and self.player.s4_correct == False)
     form_model = 'player'
-    form_fields = ['s4_group_left', 's4_group_right']
+    form_fields = ['s4_group_left' , 's4_group_right']
 
-    def error_message(self, values):
-        if values['s4_group_left'] != 4 or values['s4_group_right'] != 7:
-            if self.player.s4_tryagain == False:
-                self.player.s4_tryagain = True
-                return 'Please try again'
-            else:
-                pass  # as it is the 2nd try of the player, let him pass the page anyway
+    def before_next_page(self):
+        if self.player.s4_group_left != 4 or self.player.s4_group_right != 7:
+            self.player.s4_falsetries += 1
+        elif self.player.s4_group_left == 4 or self.player.s4_group_right == 7:
+            self.player.s4_correct = True
 
 class Solution4(Page):
     def is_displayed(self):
         return (self.round_number == 1)
 
+
+class TryAgain1(Page):
+    def is_displayed(self):
+        return (self.round_number == 1 and self.player.s1_correct == False)
+
+class TryAgain2(Page):
+    def is_displayed(self):
+        return (self.round_number == 1 and self.player.s2_correct == False)
+
+
+class TryAgain3(Page):
+    def is_displayed(self):
+        return (self.round_number == 1 and self.player.s3_correct == False)
+
+
+
+class TryAgain4(Page):
+    def is_displayed(self):
+        return (self.round_number == 1 and self.player.s4_correct == False)
 
 class Belief1(Page):
     def is_displayed(self):
@@ -121,8 +124,6 @@ class Belief2(Page):
 class Belief3(Page):
     form_model = 'player'
     form_fields = ['belief_q3']
-
-
 
 
 class Contribution(Page):
@@ -286,8 +287,13 @@ class DynamicBreakPoint1(Page):
             if value != 1234:
                 return "Please enter the correct code or wait until you receive the code from your instructor"
         elif self.player.breakpointcounter1 == 2:
+            if value != 9876:
+                return "Please enter the correct code or wait until you receive the code from your instructor"
+        elif self.player.breakpointcounter1 == 3:
             if value != 2468:
                 return "Please enter the correct code or wait until you receive the code from your instructor"
+
+
     # TODO actually I really like my breakpoint idea now. Because we have 6 breakpoints but only 2 classes and
     # TODO I can, dynamically, simply here and in the template add new breakpoints, without defining new variables!
     def before_next_page(self):
@@ -384,6 +390,7 @@ class ContributionWaitPage(WaitPage):
     wait_for_all_groups = True
 
 class BeliefWaitPage(WaitPage):
+    wait_for_all_groups = True
     def is_displayed(self):
         return (self.round_number > 1)
 
@@ -392,30 +399,44 @@ class TestingParWaitPage(WaitPage):
     def is_displayed(self):
         return (self.round_number == 1)
 
-
-
-
+class SolutionWaitPage(Page):
+    wait_for_all_groups = True
+    def is_displayed(self):
+        return (self.round_number == 1)
 
 
 page_sequence = [
     TestingParticipant,
     TestingParWaitPage,
     Situation1,
+    TryAgain1,
+    Situation1,
     Solution1,
+    Situation2,
+    TryAgain2,
     Situation2,
     Solution2,
     Situation3,
+    TryAgain3,
+    Situation3,
     Solution3,
     Situation4,
+    TryAgain4,
+    Situation4,
     Solution4,
+    SolutionWaitPage,
     Belief1,
+    BeliefWaitPage,
     Belief2,
+    BeliefWaitPage,
     Belief3,
     BeliefWaitPage, #this is for rounds >1 (in round 1 the breakpoint does the job)
     DynamicBreakPoint1,
     DBP1WaitPage,
     Contribution,
     ContributionWaitPage,
+    DynamicBreakPoint1,
+    DBP1WaitPage,
     Voting,
     BeforeResultsWaitPage,
     Results1,
@@ -431,7 +452,7 @@ page_sequence = [
     DynamicBreakPoint2,
     DBP2WaitPage,
     #put questionaire pages in
-    DynamicBreakPoint2,
+    DynamicBreakPoint2, #no Wait page here because participants get payed one at a time
     AdminPage,
     GrossPayoff
 ]

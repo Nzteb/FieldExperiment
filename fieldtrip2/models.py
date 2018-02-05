@@ -188,21 +188,24 @@ class Player(BasePlayer):
     # s1 for situation 1
     s1_group_left = models.IntegerField()
     s1_group_right = models.IntegerField()
-    # 1 if the player tried again in situation 1
-    # TODO: how to interpret this and sort out the guys who had two fails
-    # TODO: if a player has tryagain == True and the values of the variable are still wrong, then he could not answer the question
-    # TODO: I could put this in the database, but I dont want to blow it even more
-    s1_tryagain = models.BooleanField(initial=False)
+    # number of false tries the participant had for situation1 max is 2 initial is 0
+    s1_falsetries = models.IntegerField(initial=0)
+    # 1 if the participant answered the situation correctly in general (after 1 or 2 tries)
+    s1_correct = models.BooleanField(initial=False)
 
     s2_group = models.IntegerField()
-    s2_tryagain = models.BooleanField(initial=False)
+    s2_falsetries = models.IntegerField(initial=0)
+    s2_correct = models.BooleanField(initial=False)
+
 
     s3_group = models.IntegerField()
-    s3_tryagain = models.BooleanField(initial=False)
+    s3_falsetries = models.IntegerField(initial=0)
+    s3_correct = models.BooleanField(initial=False)
 
     s4_group_left = models.IntegerField()
     s4_group_right = models.IntegerField()
-    s4_tryagain = models.BooleanField(initial=False)
+    s4_falsetries = models.IntegerField(initial=0)
+    s4_correct = models.BooleanField(initial=False)
 
 
 
@@ -211,8 +214,6 @@ class Player(BasePlayer):
     test_choice = models.StringField(label='',
                                       widget=widgets.RadioSelect(),
                                       choices=['A', 'B'])
-    test_slider = models.IntegerField(widget=widgets.Slider(), max=10,
-                                      label='')
 
 
 

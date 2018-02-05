@@ -9,15 +9,24 @@
 
     <div id="main">
 
-        <img src="{% static "fieldtrip2/Solution3.png" %}">
-          <br><br><br>
+        {% if player.s3_correct == 1 %}
+
+            <img src="{% static "fieldtrip2/solution3_good.png" %}">
+              <br><br><br>
+
+        {% else %}
+
+            <img src="{% static "fieldtrip2/solution3_bad.png" %}">
+              <br><br><br>
+
+        {% endif %}
+
 
     </div>
 
 
     {% next_button %}
 {% endblock %}
-
 
 
 {% block styles %}
@@ -28,7 +37,6 @@
         input{
 
         }
-
 
         img{
             width:32em;

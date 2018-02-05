@@ -9,8 +9,18 @@
 
     <div id="main">
 
-        <img src="{% static "fieldtrip2/Solution1.png" %}">
-          <br><br><br>
+        {% if player.s1_correct == 1 %}
+
+            <img src="{% static "fieldtrip2/solution1_good.png" %}">
+              <br><br><br>
+
+        {% else %}
+
+            <img src="{% static "fieldtrip2/solution1_bad.png" %}">
+              <br><br><br>
+
+        {% endif %}
+
 
     </div>
 
@@ -27,7 +37,6 @@
         input{
 
         }
-
 
         img{
             width:32em;

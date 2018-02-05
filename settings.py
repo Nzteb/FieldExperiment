@@ -128,19 +128,7 @@ SESSION_CONFIGS = [
         'treatment': 'nosanction',  # 'nosanction'
         'debug': 'on',  # put 'off' on the field
         'app_sequence': ['fieldtrip2'],
-    },
-
-
-
-    {
-        'name': 'pictures',
-        'display_name': 'pictures',
-        'num_demo_participants': 3,
-        'app_sequence': ['testingpictures'],
     }
-
-
-
 
 ]
 
