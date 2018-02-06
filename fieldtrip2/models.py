@@ -47,8 +47,6 @@ class Subsession(BaseSubsession):
 
     def creating_session(self):
 
-
-
         player_num = len(self.get_players())
         # determine the total stranger matching
         # TODO if the game is played with less then 15 participants determination falls back to random shuffled groups
@@ -216,6 +214,7 @@ class Player(BasePlayer):
                                       choices=['A', 'B'])
 
 
+    timeout_forced = models.BooleanField(initial=False)
 
     #tracks which breakpoint to use in oTree round 7
     breakpointcounter2 = models.IntegerField(initial=1)

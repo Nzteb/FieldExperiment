@@ -114,25 +114,46 @@ class Belief1(Page):
         return (self.round_number == 1)
     form_model = 'player'
     form_fields = ['belief_q1']
+    timeout_submission = {'belief_q1':1}
+
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.timeout_forced = True
 
 class Belief2(Page):
     def is_displayed(self):
         return (self.round_number == 1)
     form_model = 'player'
     form_fields = ['belief_q2']
+    timeout_submission = {'belief_q2': 1}
+
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.timeout_forced = True
+
 
 class Belief3(Page):
     form_model = 'player'
     form_fields = ['belief_q3']
+    timeout_submission = {'belief_q3': 1}
+
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.timeout_forced = True
+
 
 
 class Contribution(Page):
     form_model = 'player'
     form_fields = ['binary_choice']
+    # if a timeout is forced, let him keep
+    timeout_submission = {'binary_choice': 1}
 
     def before_next_page(self):
         # you could do this in VotingWaitPage, I just want not all the calculations to happen there
         self.player.update_privat_account()
+        if self.timeout_happened:
+            self.player.timeout_forced = True
 
 
 class Voting(Page):
@@ -140,6 +161,13 @@ class Voting(Page):
         return self.session.config['treatment'] == 'sanction'
     form_model = 'player'
     form_fields = ['vote']
+    # if a timeout is forced, let him vote for 'no one'
+    timeout_submission = {'vote': 3}
+
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.timeout_forced = True
+
 
 #TODO: you might have to condition here on the type of treatment which is played
 class BeforeResultsWaitPage(WaitPage):
@@ -263,6 +291,12 @@ class Elicitation1(Page):
             return ['risk_elic']
         elif self.session.config['treatment'] == 'nosanction':
             return ['amb_elic']
+    # under timeout, 1 on A
+    timeout_submission = {'risk_elic':1, 'amb_elic':1}
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.timeout_forced = True
+
 
 class Elicitation2(Page):
     def is_displayed(self):
@@ -273,6 +307,11 @@ class Elicitation2(Page):
             return ['risk_elic']
         elif self.session.config['treatment'] == 'sanction':
             return ['amb_elic']
+    # under timeout, 1 on A
+    timeout_submission = {'risk_elic': 1, 'amb_elic': 1}
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.timeout_forced = True
 
 
 # so basically, for every round where you need one, one breakpoint class should do the job
@@ -399,7 +438,7 @@ class TestingParWaitPage(WaitPage):
     def is_displayed(self):
         return (self.round_number == 1)
 
-class SolutionWaitPage(Page):
+class SolutionWaitPage(WaitPage):
     wait_for_all_groups = True
     def is_displayed(self):
         return (self.round_number == 1)
@@ -426,9 +465,9 @@ page_sequence = [
     Solution4,
     SolutionWaitPage,
     Belief1,
-    BeliefWaitPage,
+    SolutionWaitPage,
     Belief2,
-    BeliefWaitPage,
+    SolutionWaitPage,
     Belief3,
     BeliefWaitPage, #this is for rounds >1 (in round 1 the breakpoint does the job)
     DynamicBreakPoint1,
