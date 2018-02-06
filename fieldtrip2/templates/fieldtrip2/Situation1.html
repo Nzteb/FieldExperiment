@@ -1,0 +1,55 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{#{% block title %}#}
+{#    Page title#}
+{#{% endblock %}#}
+
+{% block content %}
+
+    <div id="main">
+
+          <label id="label1" for="value1"><br><img src="{% static "fieldtrip2/situation1.png" %}"><br><br>
+              <input name="s1_group_left" id="value1" type = "number" min="0" max="100"  required="True" >
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <input name="s1_group_right" id="value1" type = "number" min="0" max="100" required="True" >
+          </label>
+
+          <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+    </div>
+
+
+    {% next_button %}
+{% endblock %}
+
+
+
+{% block styles %}
+
+
+    <style type="text/css">
+
+        input{
+
+        }
+
+
+        img{
+            width:32em;
+            height:32em;
+
+        }
+
+
+        label {
+            float: left;
+            padding: 0 1em;
+            text-align: center;
+        }
+
+    </style>
+
+
+{% endblock %}

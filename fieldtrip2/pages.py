@@ -3,25 +3,157 @@ from ._builtin import Page, WaitPage
 from .models import Constants
 
 
-# note: you also have to condition in the template e.g. you cannot have belief_q2 in round 2 there
-class Belief(Page):
+# let the participants train how to use a tablet
+class TestingParticipant(Page):
+    def is_displayed(self):
+        return (self.round_number == 1)
+
+    def test_number_error_message(self, value):
+        if value != 20:
+            return 'Please enter the number 20.'
+
+    def test_choice_error_message(self, value):
+        if value != 'A':
+            return 'Please choose picture A.'
+
     form_model = 'player'
-    def get_form_fields(self):
-        if self.player.round_number == 1:
-            return ['belief_q1', 'belief_q2', 'belief_q3']
-        elif self.player.round_number > 1:
-            return ['belief_q3']
-        else:
-            print('Never see me..')
+    form_fields = ['test_number', 'test_choice']
+
+
+
+class Situation1(Page):
+    def is_displayed(self):
+        return (self.round_number == 1 and self.player.s1_correct == False)
+    form_model = 'player'
+    form_fields = ['s1_group_left' , 's1_group_right']
+
+    def before_next_page(self):
+        if self.player.s1_group_left != 2 or self.player.s1_group_right != 5:
+            self.player.s1_falsetries += 1
+        elif self.player.s1_group_left == 2 or self.player.s1_group_right == 5:
+            self.player.s1_correct = True
+
+class Solution1(Page):
+    def is_displayed(self):
+        return (self.round_number == 1)
+
+
+class Situation2(Page):
+    def is_displayed(self):
+        return (self.round_number == 1 and self.player.s2_correct == False)
+
+    form_model = 'player'
+    form_fields = ['s2_group']
+
+    def before_next_page(self):
+        if self.player.s2_group != 3:
+            self.player.s2_falsetries += 1
+        elif self.player.s2_group == 3:
+            self.player.s2_correct = True
+
+class Solution2(Page):
+    def is_displayed(self):
+        return (self.round_number == 1)
+
+
+class Situation3(Page):
+    def is_displayed(self):
+        return (self.round_number == 1 and self.player.s3_correct == False)
+
+    form_model = 'player'
+    form_fields = ['s3_group']
+
+    def before_next_page(self):
+        if self.player.s3_group != 6:
+            self.player.s3_falsetries += 1
+        elif self.player.s3_group == 6:
+            self.player.s3_correct = True
+
+class Solution3(Page):
+    def is_displayed(self):
+        return (self.round_number == 1)
+
+class Situation4(Page):
+    def is_displayed(self):
+        return (self.round_number == 1 and self.player.s4_correct == False)
+    form_model = 'player'
+    form_fields = ['s4_group_left' , 's4_group_right']
+
+    def before_next_page(self):
+        if self.player.s4_group_left != 4 or self.player.s4_group_right != 7:
+            self.player.s4_falsetries += 1
+        elif self.player.s4_group_left == 4 or self.player.s4_group_right == 7:
+            self.player.s4_correct = True
+
+class Solution4(Page):
+    def is_displayed(self):
+        return (self.round_number == 1)
+
+
+class TryAgain1(Page):
+    def is_displayed(self):
+        return (self.round_number == 1 and self.player.s1_correct == False)
+
+class TryAgain2(Page):
+    def is_displayed(self):
+        return (self.round_number == 1 and self.player.s2_correct == False)
+
+
+class TryAgain3(Page):
+    def is_displayed(self):
+        return (self.round_number == 1 and self.player.s3_correct == False)
+
+
+
+class TryAgain4(Page):
+    def is_displayed(self):
+        return (self.round_number == 1 and self.player.s4_correct == False)
+
+class Belief1(Page):
+    def is_displayed(self):
+        return (self.round_number == 1)
+    form_model = 'player'
+    form_fields = ['belief_q1']
+    timeout_submission = {'belief_q1':1}
+
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.timeout_forced = True
+
+class Belief2(Page):
+    def is_displayed(self):
+        return (self.round_number == 1)
+    form_model = 'player'
+    form_fields = ['belief_q2']
+    timeout_submission = {'belief_q2': 1}
+
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.timeout_forced = True
+
+
+class Belief3(Page):
+    form_model = 'player'
+    form_fields = ['belief_q3']
+    timeout_submission = {'belief_q3': 1}
+
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.timeout_forced = True
+
 
 
 class Contribution(Page):
     form_model = 'player'
     form_fields = ['binary_choice']
+    # if a timeout is forced, let him keep
+    timeout_submission = {'binary_choice': 1}
 
     def before_next_page(self):
         # you could do this in VotingWaitPage, I just want not all the calculations to happen there
         self.player.update_privat_account()
+        if self.timeout_happened:
+            self.player.timeout_forced = True
 
 
 class Voting(Page):
@@ -29,6 +161,13 @@ class Voting(Page):
         return self.session.config['treatment'] == 'sanction'
     form_model = 'player'
     form_fields = ['vote']
+    # if a timeout is forced, let him vote for 'no one'
+    timeout_submission = {'vote': 3}
+
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.timeout_forced = True
+
 
 #TODO: you might have to condition here on the type of treatment which is played
 class BeforeResultsWaitPage(WaitPage):
@@ -61,7 +200,7 @@ class BeforeResultsWaitPage(WaitPage):
 
 
 
-class Results (Page):
+class Results1 (Page):
     def vars_for_template(self):
         # save the player objects in a dic to be able to identify them by label
         pl_objects = {}
@@ -108,6 +247,10 @@ class Results (Page):
             return var_dic
 
 
+class Results2 (Page):
+    def vars_for_template(self):
+        return {'points': self.player.indiv_share + self.player.privat_account}
+
 
 
 #old version of the page, displays full debug tables and non ordering of the table
@@ -148,6 +291,12 @@ class Elicitation1(Page):
             return ['risk_elic']
         elif self.session.config['treatment'] == 'nosanction':
             return ['amb_elic']
+    # under timeout, 1 on A
+    timeout_submission = {'risk_elic':1, 'amb_elic':1}
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.timeout_forced = True
+
 
 class Elicitation2(Page):
     def is_displayed(self):
@@ -158,6 +307,11 @@ class Elicitation2(Page):
             return ['risk_elic']
         elif self.session.config['treatment'] == 'sanction':
             return ['amb_elic']
+    # under timeout, 1 on A
+    timeout_submission = {'risk_elic': 1, 'amb_elic': 1}
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.timeout_forced = True
 
 
 # so basically, for every round where you need one, one breakpoint class should do the job
@@ -172,8 +326,13 @@ class DynamicBreakPoint1(Page):
             if value != 1234:
                 return "Please enter the correct code or wait until you receive the code from your instructor"
         elif self.player.breakpointcounter1 == 2:
+            if value != 9876:
+                return "Please enter the correct code or wait until you receive the code from your instructor"
+        elif self.player.breakpointcounter1 == 3:
             if value != 2468:
                 return "Please enter the correct code or wait until you receive the code from your instructor"
+
+
     # TODO actually I really like my breakpoint idea now. Because we have 6 breakpoints but only 2 classes and
     # TODO I can, dynamically, simply here and in the template add new breakpoints, without defining new variables!
     def before_next_page(self):
@@ -270,24 +429,57 @@ class ContributionWaitPage(WaitPage):
     wait_for_all_groups = True
 
 class BeliefWaitPage(WaitPage):
+    wait_for_all_groups = True
     def is_displayed(self):
         return (self.round_number > 1)
 
+class TestingParWaitPage(WaitPage):
+    wait_for_all_groups = True
+    def is_displayed(self):
+        return (self.round_number == 1)
 
-
-
+class SolutionWaitPage(WaitPage):
+    wait_for_all_groups = True
+    def is_displayed(self):
+        return (self.round_number == 1)
 
 
 page_sequence = [
-    Belief,
+    TestingParticipant,
+    TestingParWaitPage,
+    Situation1,
+    TryAgain1,
+    Situation1,
+    Solution1,
+    Situation2,
+    TryAgain2,
+    Situation2,
+    Solution2,
+    Situation3,
+    TryAgain3,
+    Situation3,
+    Solution3,
+    Situation4,
+    TryAgain4,
+    Situation4,
+    Solution4,
+    SolutionWaitPage,
+    Belief1,
+    SolutionWaitPage,
+    Belief2,
+    SolutionWaitPage,
+    Belief3,
     BeliefWaitPage, #this is for rounds >1 (in round 1 the breakpoint does the job)
     DynamicBreakPoint1,
     DBP1WaitPage,
     Contribution,
     ContributionWaitPage,
+    DynamicBreakPoint1,
+    DBP1WaitPage,
     Voting,
     BeforeResultsWaitPage,
-    Results,
+    Results1,
+    Results2,
     DynamicBreakPoint1,
     DBP1WaitPage,
     DynamicBreakPoint2,
@@ -299,7 +491,7 @@ page_sequence = [
     DynamicBreakPoint2,
     DBP2WaitPage,
     #put questionaire pages in
-    DynamicBreakPoint2,
+    DynamicBreakPoint2, #no Wait page here because participants get payed one at a time
     AdminPage,
     GrossPayoff
 ]

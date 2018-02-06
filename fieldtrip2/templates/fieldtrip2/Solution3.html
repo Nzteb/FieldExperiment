@@ -1,0 +1,57 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{#{% block title %}#}
+{#    Page title#}
+{#{% endblock %}#}
+
+{% block content %}
+
+    <div id="main">
+
+        {% if player.s3_correct == 1 %}
+
+            <img src="{% static "fieldtrip2/solution3_good.png" %}">
+              <br><br><br>
+
+        {% else %}
+
+            <img src="{% static "fieldtrip2/solution3_bad.png" %}">
+              <br><br><br>
+
+        {% endif %}
+
+
+    </div>
+
+
+    {% next_button %}
+{% endblock %}
+
+
+{% block styles %}
+
+
+    <style type="text/css">
+
+        input{
+
+        }
+
+        img{
+            width:32em;
+            height:32em;
+
+        }
+
+
+        label {
+            float: left;
+            padding: 0 1em;
+            text-align: center;
+        }
+
+    </style>
+
+
+{% endblock %}

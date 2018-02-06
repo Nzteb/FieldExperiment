@@ -47,8 +47,6 @@ class Subsession(BaseSubsession):
 
     def creating_session(self):
 
-
-
         player_num = len(self.get_players())
         # determine the total stranger matching
         # TODO if the game is played with less then 15 participants determination falls back to random shuffled groups
@@ -85,9 +83,9 @@ class Subsession(BaseSubsession):
         else:
             self.frequent_binary_choice = 2
 
-     # this calculates the most frequent belief of the players in round 1 from belief_q2
-     # is needed to evalute the correctness of belief_q2 itself in round 1
-     # 1: most player belief keeping is the correct thing; 2: most player belief giving is the correct thing 3: what others do
+    # this calculates the most frequent belief of the players in round 1 from belief_q2
+    # is needed to evalute the correctness of belief_q2 itself in round 1
+    # 1: most player belief keeping is the correct thing; 2: most player belief giving is the correct thing 3: what others do
     def set_frequent_binary_belief(self):
         decdoc = {1:0 , 2:0, 3:0}
         for player in self.get_players():
@@ -183,10 +181,46 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
 
+    # before the one shot pg the participants get 4 situations, which they have to evaluate correctly
+    # their guess of the correct payoff of the left guys in picture 1
+    # s1 for situation 1
+    s1_group_left = models.IntegerField()
+    s1_group_right = models.IntegerField()
+    # number of false tries the participant had for situation1 max is 2 initial is 0
+    s1_falsetries = models.IntegerField(initial=0)
+    # 1 if the participant answered the situation correctly in general (after 1 or 2 tries)
+    s1_correct = models.BooleanField(initial=False)
+
+    s2_group = models.IntegerField()
+    s2_falsetries = models.IntegerField(initial=0)
+    s2_correct = models.BooleanField(initial=False)
+
+
+    s3_group = models.IntegerField()
+    s3_falsetries = models.IntegerField(initial=0)
+    s3_correct = models.BooleanField(initial=False)
+
+    s4_group_left = models.IntegerField()
+    s4_group_right = models.IntegerField()
+    s4_falsetries = models.IntegerField(initial=0)
+    s4_correct = models.BooleanField(initial=False)
+
+
+
+    # variables to train the participants using the tablets as first pages of the experiment
+    test_number = models.IntegerField(label='')
+    test_choice = models.StringField(label='',
+                                      widget=widgets.RadioSelect(),
+                                      choices=['A', 'B'])
+
+
+    timeout_forced = models.BooleanField(initial=False)
+
+    #tracks which breakpoint to use in oTree round 7
     breakpointcounter2 = models.IntegerField(initial=1)
     breakpoint2 = models.IntegerField(label='Enter code here:')
 
-    # tracks which breakpoint code to use
+    # tracks which breakpoint code to use in oTree round 1
     breakpointcounter1 = models.IntegerField(initial=1)
     breakpoint1 = models.IntegerField(label='Enter code here:')
 
@@ -313,7 +347,7 @@ class Player(BasePlayer):
         elif self.treatment == 'nosanction':
             self.net_payoff = self.privat_account + self.indiv_share
 
-
+    # you dont need to condition on treatment here because this in done in calc_net_payoff
     def calc_gross_payoff(self):
         instance_in_os = self.in_round(1)
         instance_in_rx = self.in_round(self.round_payed+1)
