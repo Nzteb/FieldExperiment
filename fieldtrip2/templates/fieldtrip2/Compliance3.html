@@ -1,0 +1,18 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Compliance
+{% endblock %}
+
+{% block content %}
+
+    {% formfield player.fineknow %}
+
+    {% formfield player.finelevel %}
+
+    {% formfield player.finelevelestimate %}
+
+    {% next_button %}
+
+{% endblock %}

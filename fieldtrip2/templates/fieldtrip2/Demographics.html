@@ -1,0 +1,29 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Demographics
+{% endblock %}
+
+{% block content %}
+
+    {% formfield player.age %}
+
+    {% formfield player.gender %}
+
+    {% formfield player.fishyears %}
+
+    {% formfield player.whyfish %}
+
+<!--
+Documentation on how to write a django template here:
+https://docs.djangoproject.com/en/1.8/ref/templates/language/
+
+Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
+http://getbootstrap.com/components/
+
+-->
+
+    {% next_button %}
+
+{% endblock %}

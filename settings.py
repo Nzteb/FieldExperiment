@@ -8,20 +8,24 @@ import otree.settings
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+OTREE_PRODUCTION = 1
+
 # the environment variable OTREE_PRODUCTION controls whether Django runs in
 # DEBUG mode. If OTREE_PRODUCTION==1, then DEBUG=False
-if environ.get('OTREE_PRODUCTION') not in {None, '', '0'}:
-    DEBUG = False
-else:
-    DEBUG = True
+# if environ.get('OTREE_PRODUCTION') not in {None, '', '0'}:
+  #  DEBUG = False
+#else:
+#    DEBUG = True
 
 ADMIN_USERNAME = 'admin'
 
 # for security, best to set admin password in an environment variable
-ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
+#ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
 
 # don't share this with anybody.
 SECRET_KEY = '0(z&kji_8niar-9)x2$wx%(2obg4e_s#&@dsok408q=6hvo1a-'
+
+environ['DATABASE_URL'] = 'postgres://postgres@localhost/django_db'
 
 DATABASES = {
     'default': dj_database_url.config(
@@ -47,7 +51,13 @@ DATABASES = {
 # to DEMO. This will allow people to play in demo mode, but not access
 # the full admin interface.
 
-AUTH_LEVEL = environ.get('OTREE_AUTH_LEVEL')
+#OTREE_AUTH_LEVEL = 'Study'
+
+#AUTH_LEVEL = environ.get('OTREE_AUTH_LEVEL')
+
+ADMIN_PASSWORD = 'natcoop'
+DEBUG = False
+AUTH_LEVEL = 'STUDY'
 
 # setting for integration with AWS Mturk
 AWS_ACCESS_KEY_ID = environ.get('AWS_ACCESS_KEY_ID')
@@ -74,13 +84,13 @@ oTree games
 
 ROOM_DEFAULTS = {}
 
-ROOMS = [{
-
-    'name' : 'Natcoop_test',
-    'display_name' : 'Natcoop_test'
-
-}]
-
+ROOMS = [
+    {
+        'name': 'Natcoop_test',
+        'display_name' : 'Natcoop_test',
+        'participant_label_file' : 'natcoop_room.txt'
+    }
+]
 
 
 
@@ -117,7 +127,7 @@ SESSION_CONFIGS = [
         'display_name': 'fieldtrip2',
         'num_demo_participants': 3,
         'treatment': 'sanction', # 'nosanction'
-        'debug' : 'on', #put 'off' on the field
+        'debug' : 'off', #put 'off' on the field
         'app_sequence': ['fieldtrip2'],
     },
 
@@ -126,7 +136,7 @@ SESSION_CONFIGS = [
         'display_name': 'fieldtrip2_nosanction',
         'num_demo_participants': 3,
         'treatment': 'nosanction',  # 'nosanction'
-        'debug': 'on',  # put 'off' on the field
+        'debug': 'off',  # put 'off' on the field
         'app_sequence': ['fieldtrip2'],
     }
 

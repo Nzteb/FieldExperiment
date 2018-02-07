@@ -14,7 +14,7 @@ class TestingParticipant(Page):
 
     def test_choice_error_message(self, value):
         if value != 'A':
-            return 'Please choose picture A.'
+            return 'Please choose the picture with the blue fisherman.'
 
     form_model = 'player'
     form_fields = ['test_number', 'test_choice']
@@ -443,6 +443,128 @@ class SolutionWaitPage(WaitPage):
     def is_displayed(self):
         return (self.round_number == 1)
 
+class Demographics(Page):
+    def is_displayed(self):
+        return (self.round_number == Constants.num_rounds)
+    form_model = 'player'
+    form_fields = ["age",
+                   "gender",
+                   "fishyears",
+                   "whyfish",
+                   ]
+
+
+class Demographics2(Page):
+    def is_displayed(self):
+        return (self.round_number == Constants.num_rounds)
+    form_model = 'player'
+    form_fields = ["closesite",
+                   'movefreq',
+                   'moveloc',
+                   'parentshere',
+                   'parentsfisher']
+
+class Demographics3(Page):
+    def is_displayed(self):
+        return (self.round_number == Constants.num_rounds)
+    form_model = 'player'
+    form_fields = ["targetspecies",
+                   'targetspeciesswitch',
+                   'maingear',
+                   'role',
+                   'crewsize']
+
+class Compliance(Page):
+    def is_displayed(self):
+        return (self.round_number == Constants.num_rounds)
+    form_model = 'player'
+    form_fields = ['complya',
+                   'complyb',
+                   'complyc',
+                   'complyd',
+                   'complye',
+                   ]
+
+
+class Compliance2(Page):
+    def is_displayed(self):
+        return (self.round_number == Constants.num_rounds)
+    form_model = 'player'
+    form_fields = ['complyother',
+                   'whomonitor_fish',
+                   'whomonitor_police',
+                   'whomonitor_officer',
+                   'whomonitor_noone',
+                   'freqmonitor']
+
+class Compliance3(Page):
+    def is_displayed(self):
+        return (self.round_number == Constants.num_rounds)
+    form_model = 'player'
+    form_fields = ['fineknow',
+                   'finelevel',
+                   'finelevelestimate',
+                   ]
+
+
+class Management(Page):
+    def is_displayed(self):
+        return (self.round_number == Constants.num_rounds)
+    form_model = 'player'
+    form_fields = ['manchallenge',
+                   'manunsusprac',
+                   'manunsuspeople',
+                   'manoption',
+                   'manresponsibility']
+
+class Management2(Page):
+    def is_displayed(self):
+        return (self.round_number == Constants.num_rounds)
+    form_model = 'player'
+    form_fields = ['manbmuchal',
+                   'manbmuperformance',
+                   'manbmupreference',
+                  ]
+
+class Economic(Page):
+    def is_displayed(self):
+        return (self.round_number == Constants.num_rounds)
+    form_model = 'player'
+    form_fields = ['ecohhpeople',
+                   'ecohhearn',
+                   'ecohhfracfish',
+                  ]
+
+class Economic2(Page):
+    def is_displayed(self):
+        return (self.round_number == Constants.num_rounds)
+    form_model = 'player'
+    form_fields = ['compare',
+                   'howpast',
+                   'howfuture'
+                  ]
+
+class Economic3(Page):
+    def is_displayed(self):
+        return (self.round_number == Constants.num_rounds)
+    form_model = 'player'
+    form_fields = ['earngood',
+                   'earnnormal',
+                   'earnbad',
+                   'catchgood',
+                   'catchnormal',
+                   'catchbad'
+                  ]
+
+class Economic4(Page):
+    def is_displayed(self):
+        return (self.round_number == Constants.num_rounds)
+    form_model = 'player'
+    form_fields = ['futurefish',
+                   'risk',
+                   'exper',
+                   ]
+
 
 page_sequence = [
     TestingParticipant,
@@ -490,8 +612,19 @@ page_sequence = [
     Elicitation2,
     DynamicBreakPoint2,
     DBP2WaitPage,
-    #put questionaire pages in
-    DynamicBreakPoint2, #no Wait page here because participants get payed one at a time
+    Demographics,
+    Demographics2,
+    Demographics3,
+    Compliance,
+    Compliance2,
+    Compliance3,
+    Management,
+    Management2,
+    Economic,
+    Economic2,
+    Economic3,
+    Economic4,
+    DynamicBreakPoint2,  # no Wait page here because participants get payed one at a time
     AdminPage,
     GrossPayoff
 ]

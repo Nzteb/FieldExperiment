@@ -1,0 +1,26 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Compliance
+{% endblock %}
+
+{% block content %}
+
+    {% formfield player.complyother %}
+
+   <span style="font-weight:bold">Do the following groups monitor compliance in your area?</span>
+
+    {% formfield player.whomonitor_fish %}
+
+    {% formfield player.whomonitor_police %}
+
+    {% formfield player.whomonitor_officer %}
+
+    {% formfield player.whomonitor_noone %}
+
+    {% formfield player.freqmonitor %}
+
+    {% next_button %}
+
+{% endblock %}

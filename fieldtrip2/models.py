@@ -363,3 +363,330 @@ class Player(BasePlayer):
 
         ####### Questionaire variables #######
 
+    age = models.PositiveIntegerField(
+        min=18,
+        max=120,
+        label="How old are you?",
+        doc="We collect age data, between 0 and +120.",
+    )
+
+    gender = models.CharField(
+        choices=['Male', 'Female', 'Other'],
+        widget=widgets.RadioSelect(),
+        blank=True,
+        label="What is your gender?"
+    )
+
+    fishyears = models.CharField(
+        choices=['This year only', '2 to 4', '6 to 10', '11 or more', 'No answer'],
+        widget=widgets.RadioSelect(),
+        blank=True,
+        label="How many years have you been a fisher?"
+    )
+
+    whyfish = models.CharField(
+        choices=['It was the best option', 'It was the only option', 'Family tradition', 'no answer'],
+        widget=widgets.RadioSelect(),
+        blank=True,
+        label="Why did you become a fisher?"
+    )
+
+    closesite = models.CharField(
+        choices=['Yes', 'No', 'No answer'],
+        widget=widgets.RadioSelect(),
+        blank=True,
+        label="Have you always lived close to this landing site?"
+    )
+
+    moveduration = models.CharField(
+        choices=['This year only', '2 to 4', '6 to 10', '11 or more', 'No answer'],
+        widget=widgets.RadioSelect(),
+        blank=True,
+        label="How many years have you lived close to this landing site?"
+    )
+
+    movefreq = models.CharField(
+        choices=['Never moved', 'Once', 'A few times', 'Once a year', 'Several times a year', 'No answer'],
+        widget=widgets.RadioSelect(),
+        blank=True,
+        label="If you have moved, how often have you moved?"
+    )
+
+    moveloc = models.CharField(
+        choices=['A nearby city', 'A different landing site on Lake Victoria', 'Outside of Tanzania'],
+        widget=widgets.RadioSelect(),
+        blank=True,
+        label="If you have moved, where did you live last year?"
+    )
+
+    parentshere = models.CharField(
+        choices=['Yes', 'No', 'No answer'],
+        widget=widgets.RadioSelect(),
+        blank=True,
+        label="Have your parents always lived close to this landing site?",
+    )
+
+    parentsfisher = models.CharField(
+        choices=['Yes', 'No', 'No answer'],
+        widget=widgets.RadioSelect(),
+        blank=True,
+        label='Have your parents always been fishers?',
+    )
+
+    targetspecies = models.CharField(
+        choices=['Dagaa', 'Perch/Tilapia', 'Other fish', 'All fish', 'No answer'],
+        widget=widgets.RadioSelect(),
+        blank=True,
+        label="Do you target Dagaa or Nile Perch or other fish?",
+    )
+
+    targetspeciesswitch = models.CharField(
+        choices=['No switch', 'Once, from Dagaa to Perch', 'Once, from Perch to Dagaa', 'Several times', 'No answer'],
+        widget=widgets.RadioSelect(),
+        blank=True,
+        label="Have you switched your target fish?",
+    )
+
+    maingear = models.CharField(
+        choices=['Gillnet', 'Hook', 'Dagaa net', 'Beach seine', 'No answer'],
+        widget=widgets.RadioSelect(),
+        blank=True,
+        label="Which gear do you use?",
+    )
+
+    role = models.CharField(
+        choices=['Owner', 'Skipper', 'Crew', 'No answer'],
+        widget=widgets.RadioSelect(),
+        blank=True,
+        label="What is your role on board?",
+    )
+
+    crewsize = models.IntegerField(
+        min=1,
+        max=20,
+        widget=widgets.Slider(attrs={'step': '1'}),
+        label='How many people are on board your vessel including yourself?',
+    )
+
+    complya = models.CharField(
+        choices=['Almost all comply', 'Most comply', 'Many comply', 'Few comply', 'Almost no one complies'],
+        widget=widgets.RadioSelect(),
+        blank=True,
+        label='Gillnet meshsize is above 5 inches.',
+    )
+    complyb = models.CharField(
+        choices=['Almost all comply', 'Most comply', 'Many comply', 'Few comply', 'Almost no one complies'],
+        widget=widgets.RadioSelect(),
+        blank=True,
+        label="Dagaa net meshsize is above 10 mm.",
+    )
+    complyc = models.CharField(
+        choices=['Almost all comply', 'Most comply', 'Many comply', 'Few comply', 'Almost no one complies'],
+        widget=widgets.RadioSelect(),
+        blank=True,
+        label="Vessels have proper licenses.",
+    )
+    complyd = models.CharField(
+        choices=['Almost all comply', 'Most comply', 'Many comply', 'Few comply', 'Almost no one complies'],
+        widget=widgets.RadioSelect(),
+        blank=True,
+        label="No undersized fish are landed.",
+    )
+
+    complye = models.CharField(
+        choices=['Almost all comply', 'Most comply', 'Many comply', 'Few comply', 'Almost no one complies'],
+        widget=widgets.RadioSelect(),
+        blank=True,
+        label="No dynamite or poison is being used.",
+    )
+
+    complyother = models.CharField(
+        choices=['More compliance', 'Less compliance', 'About the same'],
+        widget=widgets.RadioSelect(),
+        blank=True,
+        label="How is the situation in other areas?",
+    )
+
+    freqmonitor = models.CharField(
+        choices=['Never', 'Once or twice', 'Once a year', 'Once a month', 'More often'],
+        widget=widgets.RadioSelectHorizontal(),
+        blank=True,
+        label='How often have you been controlled?',
+    )
+    fineknow = models.CharField(
+        choices=['Yes', 'No'],
+        widget=widgets.RadioSelectHorizontal(),
+        blank=True,
+        label='Do you know the level of a fine if caught violating?',
+    )
+    finelevel = models.CharField(
+        choices=['50.000 TZS', '150 000 TZS', '300 000 TZS', '500 000 TZS', 'More than 500 000 TZS'],
+        widget=widgets.RadioSelectHorizontal(),
+        blank=True,
+        label='What is the level of the fine?',
+    )
+
+    finelevelestimate = models.CharField(
+        choices=['50.000 TZS', '150 000 TZS', '300 000 TZS', '500 000 TZS', 'More than 500 000 TZS'],
+        widget=widgets.RadioSelectHorizontal(),
+        blank=True,
+        label='What do you think that the level of the fine is?',
+    )
+    manchallenge = models.CharField(
+        choices=['Unsustainable practices', 'Increased effort and capactity', 'Eutrophication'],
+        widget=widgets.RadioSelect(),
+        blank=True,
+        label='What do you consider to be a major challenge facing fisheries in your area?',
+    )
+
+    manunsusprac = models.CharField(
+        choices=['Use of beach seine', 'Use of monofilament nets', 'Use of small sized nets', 'Use of chemicals'],
+        widget=widgets.RadioSelect(),
+        blank=True,
+        label='If unsustainable fishing practices are used, what is the most common practice in your area?',
+    )
+    manunsuspeople = models.CharField(
+        choices=['They are rich fishers', 'They are poor fishers', 'All are involved'],
+        widget=widgets.RadioSelect(),
+        blank=True,
+        label='What is your view about those engaged in unsustainable practices in your area',
+    )
+    manoption = models.CharField(
+        choices=['Continuing with patrols', 'Regulation on quanitity of fish catch by a fisher',
+                 'Regulation on number of boats and gears owned by a fisher',
+                 'Giving fishing community power to control acces', 'Provision of eduation fo fishers',
+                 'Control/treat effluents emission to the lake'],
+        widget=widgets.RadioSelect(),
+        blank=True,
+        label='What do you consider approriate options for adressing the challenge mentioned above',
+    )
+
+    manresponsibility = models.CharField(
+        choices=['The state', 'BMU', 'State and BMU jointly', 'Fish processing industries', 'Civil societies'],
+        widget=widgets.RadioSelect(),
+        blank=True,
+        label='In your opinion, who have more responsibilities in fisheries management in your area?',
+    )
+
+    manbmuchal = models.CharField(
+        label='Do you think the BMU as currently constituted can adress challenges facing the fisheries in your area?',
+        blank=True,
+        choices=['Yes', 'No', 'No answer'],
+        widget=widgets.RadioSelect
+    )
+
+    manbmuperformance = models.CharField(
+        label='Are you satisfied with the performance of your representative in the BMU committee in your area',
+        blank=True,
+        choices=['Yes', 'No', 'No answer'],
+        widget=widgets.RadioSelect
+    )
+
+    manbmupreference = models.CharField(
+        label='If given the chance to strengthen the BMU, what do you prefer most?',
+        blank=True,
+        choices=['Reduce committee membership', 'Give them more responsibility', 'Financial sustainability',
+                 'Improve interatcion with other stakeholders'],
+        widget=widgets.RadioSelect
+    )
+
+    ecohhpeople = models.CharField(
+        label='How many people are in your household?',
+        blank=True,
+        choices=['1', '2', '3-5', '6-10', '11-15', 'more than 15'],
+        widget=widgets.RadioSelectHorizontal
+    )
+
+    ecohhearn = models.CharField(
+        label='How many people earn money or provide food in your household?',
+        blank=True,
+        choices=['1', '2', '3-5', '6-10', '11-15', 'more than 15'],
+        widget=widgets.RadioSelect
+    )
+
+    ecohhfracfish = models.CharField(
+        label='Which fraction of the total income in your household comes from fishing?',
+        blank=True,
+        choices=['1-25%', '25-50%', '50-75%', '75-100%'],
+        widget=widgets.RadioSelect
+    )
+    compare = models.CharField(
+        label='Compared to what you consider normal, was this a good fishing season so far?',
+        blank=True,
+        choices=['Very good', 'Good', 'Average', 'Bad', 'Very bad', 'No answer'],
+        widget=widgets.RadioSelect
+    )
+    earngood = models.IntegerField(
+        label='On a good day:',
+        blank=True,
+        min=0,
+        max=10000000
+    )
+    earnnormal = models.IntegerField(
+        label='On a normal day:',
+        blank=True,
+        min=0,
+        max=10000000
+    )
+    earnbad = models.IntegerField(
+        label='On a bad day:',
+        blank=True,
+        min=0,
+        max=10000000
+    )
+    catchgood = models.IntegerField(
+        label='On a good day:',
+        blank=True,
+        min=0,
+        max=10000000
+    )
+    catchnormal = models.IntegerField(
+        label='On a normal day:',
+        blank=True,
+        min=0,
+        max=10000000
+    )
+    catchbad = models.IntegerField(
+        label='On a bad day:',
+        blank=True,
+        min=0,
+        max=10000000
+    )
+    howpast = models.CharField(
+        label='How does a normal fishing trip today compare to a trip last year?',
+        blank=True,
+        choices=['It has improved', 'It has stayed the same', 'It has worsened'],
+        widget=widgets.RadioSelect
+    )
+
+    howfuture = models.CharField(
+        label='How do you think a normal fishing trip today will compare to a trip next year?',
+        blank=True,
+        choices=['It will improve', 'It will stay the same', 'It will worsen'],
+        widget=widgets.RadioSelect
+    )
+
+    futurefish = models.CharField(
+        label='Do you see yourself being a fisher in 2 years time?',
+        blank=True,
+        choices=['Yes', 'No', 'No answer'],
+        widget=widgets.RadioSelect
+    )
+    risk = models.CharField(
+        label='Generally speaking, are you a person who is willing to take risks?',
+        blank=True,
+        choices=['1, Not willing to take risks', '2', '3', '4', '5', '6, Very willing to take risks'],
+        widget=widgets.RadioSelectHorizontal
+    )
+    exper = models.CharField(
+        label='Have you participated in the NATCOOP survey before?',
+        blank=True,
+        choices=['Yes', 'No', 'No answer'],
+        widget=widgets.RadioSelect
+    )
+
+    whomonitor_fish = models.BooleanField(initial=False, label="Fishers/BMU", blank=True, widget = widgets.CheckboxInput)
+    whomonitor_police = models.BooleanField(initial=False, label="Police/Military", blank=True, widget = widgets.CheckboxInput)
+    whomonitor_officer = models.BooleanField(initial=False, label="Fisheries officer", blank=True, widget = widgets.CheckboxInput)
+    whomonitor_noone = models.BooleanField(initial=False, label="No one", blank=True, widget = widgets.CheckboxInput)
+
