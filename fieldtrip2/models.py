@@ -15,7 +15,7 @@ Your app description
 class Constants(BaseConstants):
     name_in_url = 'fieldtrip2'
     players_per_group = 3 # must not be changed
-    num_rounds = 2
+    num_rounds = 7
 
     shilling_mult = 300
     belief_bonus = 1
@@ -690,3 +690,39 @@ class Player(BasePlayer):
     whomonitor_officer = models.BooleanField(initial=False, label="Fisheries officer", blank=True, widget = widgets.CheckboxInput)
     whomonitor_noone = models.BooleanField(initial=False, label="No one", blank=True, widget = widgets.CheckboxInput)
 
+    test_risk_1 = models.CharField(
+        label='What will happen to the points in area A?',
+        blank=False,
+        choices=['They will triple','They will be lost', 'They will stay the same'],
+        widget=widgets.RadioSelect
+
+    )
+
+    test_risk_2 = models.CharField(
+        label='What will happen to the points in area B?',
+        blank=False,
+        choices=['They will triple', 'They will be lost', 'They will stay the same'],
+        widget=widgets.RadioSelect
+
+    )
+
+    test_amb_1 = models.CharField(
+        label='What will happen to the points in area A?',
+        blank=False,
+        choices=['They will triple', 'They will be lost', 'They will stay the same'],
+        widget=widgets.RadioSelect
+
+    )
+
+    test_amb_2 = models.CharField(
+        label='What will happen to the points in area B?',
+        blank=False,
+        choices=['They will triple', 'They will be lost', 'They will stay the same'],
+        widget=widgets.RadioSelect
+
+    )
+
+    study = models.CharField(
+        label='What is your main field of study?',
+        blank=False
+    )

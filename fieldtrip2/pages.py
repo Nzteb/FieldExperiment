@@ -154,7 +154,7 @@ class Contribution(Page):
         self.player.update_privat_account()
         if self.timeout_happened:
             self.player.timeout_forced = True
-
+    
 
 class Voting(Page):
     def is_displayed(self):
@@ -453,6 +453,15 @@ class Demographics(Page):
                    "whyfish",
                    ]
 
+class DemographicsPilot(Page):
+    def is_displayed(self):
+        return (self.round_number == Constants.num_rounds)
+    form_model = 'player'
+    form_fields = ["age",
+                   "gender",
+                   "study"
+                   ]
+
 
 class Demographics2(Page):
     def is_displayed(self):
@@ -565,6 +574,24 @@ class Economic4(Page):
                    'exper',
                    ]
 
+class RiskTest(Page):
+    def is_displayed(self):
+        return (self.round_number == Constants.num_rounds)
+    form_model = 'player'
+    form_fields = ['test_risk_1',
+                   'test_risk_2'
+                   ]
+
+
+class AmbTest(Page):
+    def is_displayed(self):
+        return (self.round_number == Constants.num_rounds)
+    form_model = 'player'
+    form_fields = ['test_amb_1',
+                   'test_amb_2'
+                   ]
+
+
 
 page_sequence = [
     TestingParticipant,
@@ -573,14 +600,17 @@ page_sequence = [
     TryAgain1,
     Situation1,
     Solution1,
+    TestingParWaitPage,
     Situation2,
     TryAgain2,
     Situation2,
     Solution2,
+    TestingParWaitPage,
     Situation3,
     TryAgain3,
     Situation3,
     Solution3,
+    TestingParWaitPage,
     Situation4,
     TryAgain4,
     Situation4,
@@ -605,25 +635,16 @@ page_sequence = [
     DynamicBreakPoint1,
     DBP1WaitPage,
     DynamicBreakPoint2,
+    RiskTest,
     DBP2WaitPage,
     Elicitation1,
     DynamicBreakPoint2,
+    AmbTest,
     DBP2WaitPage,
     Elicitation2,
     DynamicBreakPoint2,
     DBP2WaitPage,
-    Demographics,
-    Demographics2,
-    Demographics3,
-    Compliance,
-    Compliance2,
-    Compliance3,
-    Management,
-    Management2,
-    Economic,
-    Economic2,
-    Economic3,
-    Economic4,
+    DemographicsPilot,
     DynamicBreakPoint2,  # no Wait page here because participants get payed one at a time
     AdminPage,
     GrossPayoff

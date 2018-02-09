@@ -33,20 +33,20 @@
 
         <tr>
             <th><p style="color: blue; font-size: 45px;">You</p></th>
-            <th>{% if player.binary_choice == 1%} <img class="tablepic" src="{% static "fieldtrip2/keep.png" %}"> {% else %}<img class="tablepic" src="{% static "fieldtrip2/give.png" %}">{% endif %}</th>
+            <th>{% if player.binary_choice == 1%} <img class="tablepic" src="{% static "fieldtrip2/keep2.png" %}"> {% else %}<img class="tablepic" src="{% static "fieldtrip2/give.png" %}">{% endif %}</th>
             {% if player.treatment == 'sanction' %}<th>{% if player.gets_bonus == 1%}<img class="tablepic" src="{% static "fieldtrip2/yes.png" %}">{% else %}<img class="tablepic" src="{% static "fieldtrip2/no.png" %}">{% endif %}</th>{% endif %}
         </tr>
 
         <tr>
             <th>{{ p2_label }}</th>
-            <th>{% if p2_choice == 1%} <img class="tablepic" src="{% static "fieldtrip2/keep.png" %}"> {% else %}<img class="tablepic" src="{% static "fieldtrip2/give.png" %}">{% endif %}</th>
+            <th>{% if p2_choice == 1%} <img class="tablepic" src="{% static "fieldtrip2/keep2.png" %}"> {% else %}<img class="tablepic" src="{% static "fieldtrip2/give.png" %}">{% endif %}</th>
             {% if player.treatment == 'sanction' %}<th>{% if p2_bonus == 1%}<img class="tablepic" src="{% static "fieldtrip2/yes.png" %}">{% else %}<img class="tablepic" src="{% static "fieldtrip2/no.png" %}">{% endif %}</th>{% endif %}
         </tr>
 
 
         <tr>
             <th>{{ p3_label }}</th>
-            <th>{% if p3_choice == 1%} <img class="tablepic" src="{% static "fieldtrip2/keep.png" %}"> {% else %}<img class="tablepic" src="{% static "fieldtrip2/give.png" %}">{% endif %}</th>
+            <th>{% if p3_choice == 1%} <img class="tablepic" src="{% static "fieldtrip2/keep2.png" %}"> {% else %}<img class="tablepic" src="{% static "fieldtrip2/give.png" %}">{% endif %}</th>
             {% if player.treatment == 'sanction' %}<th>{% if p3_bonus == 1%}<img class="tablepic" src="{% static "fieldtrip2/yes.png" %}">{% else %}<img class="tablepic" src="{% static "fieldtrip2/no.png" %}">{% endif %}</th>{% endif %}
         </tr>
     </table>
