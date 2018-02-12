@@ -149,12 +149,15 @@ class Contribution(Page):
     # if a timeout is forced, let him keep
     timeout_submission = {'binary_choice': 1}
 
+    def vars_for_template(self):
+        return {'round': self.player.round_number - 1}
+
     def before_next_page(self):
         # you could do this in VotingWaitPage, I just want not all the calculations to happen there
         self.player.update_privat_account()
         if self.timeout_happened:
             self.player.timeout_forced = True
-    
+
 
 class Voting(Page):
     def is_displayed(self):
@@ -163,6 +166,9 @@ class Voting(Page):
     form_fields = ['vote']
     # if a timeout is forced, let him vote for 'no one'
     timeout_submission = {'vote': 3}
+
+    def vars_for_template(self):
+        return {'round': self.player.round_number - 1}
 
     def before_next_page(self):
         if self.timeout_happened:
@@ -248,9 +254,10 @@ class Results1 (Page):
 
 
 class Results2 (Page):
-    def vars_for_template(self):
-        return {'points': self.player.indiv_share + self.player.privat_account}
 
+    def vars_for_template(self):
+        return {'round': self.player.round_number - 1,
+                'points': self.player.indiv_share + self.player.privat_account}
 
 
 #old version of the page, displays full debug tables and non ordering of the table

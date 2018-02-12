@@ -1,9 +1,13 @@
 {% extends "global/Page.html" %}
 {% load staticfiles otree %}
 
-{#{% block title %}#}
-{#    Results Picture#}
-{#{% endblock %}#}
+{% block title %}
+     {%  if player.round_number > 1%}
+          Round {{round}}
+     {% endif %}
+
+{% endblock %}
+
 
 {% block content %}
 
