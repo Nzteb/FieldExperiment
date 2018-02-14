@@ -1,0 +1,45 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+    <div id="main">
+
+    {% if player.treatment == 'sanction' %}
+
+        {% formfield player.test_risk_1 %}
+<br>
+        {% formfield player.test_risk_2 %}
+<br>
+        {% formfield player.test_risk_3 %}
+<br>
+        {% formfield player.test_risk_4 %}
+
+    {% elif player.treatment == 'nosanction' %}
+
+        {% formfield player.test_amb_1 %}
+<br>
+        {% formfield player.test_amb_2 %}
+<br>
+        {% formfield player.test_amb_3 %}
+<br>
+        {% formfield player.test_amb_4 %}
+
+
+    {%  endif %}
+
+    </div>
+
+    <br>
+    {% next_button %}
+{% endblock %}
+
+{% block styles %}
+
+
+{% endblock %}
+
+
+

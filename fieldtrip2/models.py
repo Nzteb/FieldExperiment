@@ -4,7 +4,7 @@ from otree.api import (
 )
 
 
-author = 'Your name here'
+author = 'Patrick Betz, Robbert Schaap'
 
 doc = """
 Your app description
@@ -15,14 +15,14 @@ Your app description
 class Constants(BaseConstants):
     name_in_url = 'fieldtrip2'
     players_per_group = 3 # must not be changed
-    num_rounds = 7
+    num_rounds = 1
 
     shilling_mult = 300
     belief_bonus = 1
     # initial value of the privat account
-    ini_privat = 3
+    ini_privat = 4
     bonus = 1
-    multiplier = 2 / players_per_group
+    multiplier = 1.5 / players_per_group
     gm_21 = [[[16, 21, 13], [5, 8, 20], [11, 17, 7], [2, 3, 1], [10, 14, 9], [15, 12, 6], [19, 4, 18]] , [[5, 9, 18], [7, 6, 16], [3, 13, 17], [15, 1, 4], [10, 12, 19], [2, 8, 21], [11, 20, 14]] , [[1, 8, 7], [14, 15, 13], [18, 12, 2], [16, 19, 20], [3, 9, 11], [17, 10, 6], [5, 4, 21]]  ,[[1, 6, 13], [15, 19, 5], [16, 2, 4], [14, 12, 7], [18, 11, 21], [17, 9, 8], [3, 10, 20]], [[15, 11, 16], [8, 10, 4], [2, 20, 13], [21, 17, 12], [18, 14, 1], [3, 7, 5], [19, 6, 9]] ,[[11, 1, 19], [8, 13, 12], [2, 9, 7], [14, 21, 3], [17, 5, 16], [6, 4, 20], [18, 10, 15]]  ,[[17, 2, 15], [13, 5, 10], [21, 7, 19], [18, 16, 3], [1, 9, 20], [14, 6, 8], [12, 11, 4]]]
     gm_18 = [[[12, 16, 6], [1, 17, 15], [2, 7, 4], [9, 14, 8], [5, 18, 3], [10, 13, 11]] ,[[4, 15, 9], [2, 11, 8], [12, 10, 1], [14, 16, 5], [18, 7, 17], [13, 6, 3]]  , [[15, 6, 2], [13, 1, 9], [8, 10, 16], [7, 5, 12], [17, 3, 14], [4, 11, 18]] ,[[1, 5, 2], [3, 9, 7], [11, 15, 12], [6, 17, 8], [18, 10, 14], [4, 13, 16]] ,[[12, 2, 3], [8, 18, 13], [14, 4, 6], [15, 10, 7], [11, 1, 16], [5, 17, 9]] , [[11, 5, 6], [15, 14, 13], [4, 10, 3], [8, 1, 7], [16, 17, 2], [18, 9, 12]], [[16, 3, 15], [5, 4, 8], [7, 14, 11], [2, 9, 10], [12, 17, 13], [1, 18, 6]] ]
     gm_15 = [[[12, 5, 6], [7, 10, 3], [15, 13, 4], [1, 11, 8], [2, 14, 9]], [[1, 5, 7], [11, 2, 4], [14, 8, 12], [13, 10, 6], [9, 3, 15]] , [[1, 15, 6], [3, 4, 5], [7, 8, 2], [14, 13, 11], [9, 12, 10]] ,[[15, 8, 10], [5, 13, 2], [9, 11, 6], [14, 3, 1], [4, 7, 12]] ,[[10, 11, 5], [8, 13, 3], [15, 12, 2], [1, 4, 9], [7, 6, 14]] ,[[13, 1, 12], [2, 6, 3], [7, 11, 15], [14, 10, 4], [5, 9, 8]] ,[[5, 15, 14], [4, 6, 8], [3, 12, 11], [10, 2, 1], [9, 13, 7]]]
@@ -373,98 +373,98 @@ class Player(BasePlayer):
     gender = models.CharField(
         choices=['Male', 'Female', 'Other'],
         widget=widgets.RadioSelect(),
-        blank=True,
+        blank=False,
         label="What is your gender?"
+    )
+
+    ethnicity = models.CharField(
+        choices=['Option A', 'Option B', 'Option C', 'Option D', 'Other'],
+        widget=widgets.RadioSelect,
+        blank=False,
+        label="What is your ethnicity"
     )
 
     fishyears = models.CharField(
         choices=['This year only', '2 to 4', '6 to 10', '11 or more', 'No answer'],
         widget=widgets.RadioSelect(),
-        blank=True,
+        blank=False,
         label="How many years have you been a fisher?"
     )
 
     whyfish = models.CharField(
         choices=['It was the best option', 'It was the only option', 'Family tradition', 'no answer'],
         widget=widgets.RadioSelect(),
-        blank=True,
+        blank=False,
         label="Why did you become a fisher?"
     )
 
     closesite = models.CharField(
-        choices=['Yes', 'No', 'No answer'],
-        widget=widgets.RadioSelect(),
-        blank=True,
-        label="Have you always lived close to this landing site?"
-    )
-
-    moveduration = models.CharField(
         choices=['This year only', '2 to 4', '6 to 10', '11 or more', 'No answer'],
         widget=widgets.RadioSelect(),
-        blank=True,
-        label="How many years have you lived close to this landing site?"
+        blank=False,
+        label="Have many years have you lived close to this landing site?"
     )
 
     movefreq = models.CharField(
         choices=['Never moved', 'Once', 'A few times', 'Once a year', 'Several times a year', 'No answer'],
         widget=widgets.RadioSelect(),
-        blank=True,
+        blank=False,
         label="If you have moved, how often have you moved?"
     )
 
     moveloc = models.CharField(
-        choices=['A nearby city', 'A different landing site on Lake Victoria', 'Outside of Tanzania'],
+        choices=['Option A', 'Option B', 'Option C', 'Option D', 'Other'],
         widget=widgets.RadioSelect(),
-        blank=True,
+        blank=False,
         label="If you have moved, where did you live last year?"
     )
 
     parentshere = models.CharField(
         choices=['Yes', 'No', 'No answer'],
         widget=widgets.RadioSelect(),
-        blank=True,
+        blank=False,
         label="Have your parents always lived close to this landing site?",
     )
 
     parentsfisher = models.CharField(
         choices=['Yes', 'No', 'No answer'],
         widget=widgets.RadioSelect(),
-        blank=True,
+        blank=False,
         label='Have your parents always been fishers?',
     )
 
     targetspecies = models.CharField(
-        choices=['Dagaa', 'Perch/Tilapia', 'Other fish', 'All fish', 'No answer'],
+        choices=['Dagaa', 'Nile Perch', 'Tilapia', 'Other fish', 'No answer'],
         widget=widgets.RadioSelect(),
-        blank=True,
-        label="Do you target Dagaa or Nile Perch or other fish?",
+        blank=False,
+        label="What species of fish do you target?",
     )
 
     targetspeciesswitch = models.CharField(
         choices=['No switch', 'Once, from Dagaa to Perch', 'Once, from Perch to Dagaa', 'Several times', 'No answer'],
         widget=widgets.RadioSelect(),
-        blank=True,
+        blank=False,
         label="Have you switched your target fish?",
     )
 
     maingear = models.CharField(
         choices=['Gillnet', 'Hook', 'Dagaa net', 'Beach seine', 'No answer'],
         widget=widgets.RadioSelect(),
-        blank=True,
+        blank=False,
         label="Which gear do you use?",
     )
 
     role = models.CharField(
-        choices=['Owner', 'Skipper', 'Crew', 'No answer'],
+        choices=['Owner', 'Captain', 'Crew', 'No answer'],
         widget=widgets.RadioSelect(),
-        blank=True,
+        blank=False,
         label="What is your role on board?",
     )
 
     crewsize = models.IntegerField(
-        min=1,
-        max=20,
-        widget=widgets.Slider(attrs={'step': '1'}),
+        choices=['0','1','2','3','4','5''6 or more','No answer'],
+        widget=widgets.RadioSelect,
+        blank=False,
         label='How many people are on board your vessel including yourself?',
     )
 
@@ -523,7 +523,7 @@ class Player(BasePlayer):
         choices=['50.000 TZS', '150 000 TZS', '300 000 TZS', '500 000 TZS', 'More than 500 000 TZS'],
         widget=widgets.RadioSelectHorizontal(),
         blank=True,
-        label='What is the level of the fine?',
+        label='What is the level of the fine? (If you do not know, please estimate the level of the fine).',
     )
 
     finelevelestimate = models.CharField(
@@ -532,6 +532,9 @@ class Player(BasePlayer):
         blank=True,
         label='What do you think that the level of the fine is?',
     )
+
+
+
     manchallenge = models.CharField(
         choices=['Unsustainable practices', 'Increased effort and capactity', 'Eutrophication'],
         widget=widgets.RadioSelect(),
@@ -602,6 +605,12 @@ class Player(BasePlayer):
         blank=True,
         choices=['1', '2', '3-5', '6-10', '11-15', 'more than 15'],
         widget=widgets.RadioSelect
+    )
+
+    ecohhleader = models.CharField(
+        label='Who takes the important descisions in your household?',
+        blank=True,
+        choices=['I myself','My spouse','My father','My uncle','My grandfather/granduncle','other']
     )
 
     ecohhfracfish = models.CharField(
@@ -691,6 +700,20 @@ class Player(BasePlayer):
     whomonitor_noone = models.BooleanField(initial=False, label="No one", blank=True, widget = widgets.CheckboxInput)
 
     test_risk_1 = models.CharField(
+        label='Did the presenter throw heads or tails?',
+        blank=False,
+        choices=['Heads','Tails'],
+        widget=widgets.RadioSelect
+    )
+
+    test_risk_2 = models.CharField(
+        label='Does this mean that Area A is good or that Area A is bad?',
+        blank=False,
+        choices=['Area A is good','Area A is bad'],
+        widget=widgets.RadioSelect
+    )
+
+    test_risk_3 = models.CharField(
         label='What will happen to the points in area A?',
         blank=False,
         choices=['They will triple','They will be lost', 'They will stay the same'],
@@ -698,7 +721,7 @@ class Player(BasePlayer):
 
     )
 
-    test_risk_2 = models.CharField(
+    test_risk_4 = models.CharField(
         label='What will happen to the points in area B?',
         blank=False,
         choices=['They will triple', 'They will be lost', 'They will stay the same'],
@@ -707,6 +730,20 @@ class Player(BasePlayer):
     )
 
     test_amb_1 = models.CharField(
+        label='Did the presenter draw a white or a black marble?',
+        blank=False,
+        choices=['White','Black'],
+        widget=widgets.RadioSelect
+    )
+
+    test_amb_2 = models.CharField(
+        label='Does this mean that Area A is good or that Area A is bad?',
+        blank=False,
+        choices=['Area A is good','Area A is bad'],
+        widget=widgets.RadioSelect
+    )
+
+    test_amb_3 = models.CharField(
         label='What will happen to the points in area A?',
         blank=False,
         choices=['They will triple', 'They will be lost', 'They will stay the same'],
@@ -714,15 +751,10 @@ class Player(BasePlayer):
 
     )
 
-    test_amb_2 = models.CharField(
+    test_amb_4 = models.CharField(
         label='What will happen to the points in area B?',
         blank=False,
         choices=['They will triple', 'They will be lost', 'They will stay the same'],
         widget=widgets.RadioSelect
 
-    )
-
-    study = models.CharField(
-        label='What is your main field of study?',
-        blank=False
     )

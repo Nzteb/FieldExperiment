@@ -1,9 +1,12 @@
 {% extends "global/Page.html" %}
 {% load staticfiles otree %}
 
-{#{% block title %}#}
-{#    Belief#}
-{#{% endblock %}#}
+{% block title %}
+     {%  if player.round_number > 1%}
+          Round {{round}}
+     {% endif %}
+
+{% endblock %}
 
 {% block content %}
 
@@ -28,14 +31,14 @@
     <style type="text/css">
 
         img{
-            width:9.5em;
-            height:9.5em;
+            width:10em;
+            height:15em;
         }
 
 
         label {
             float: left;
-            padding: 0 1em;
+            padding: 0 0.6em;
             text-align: center;
         }
 

@@ -25,12 +25,12 @@ class Situation1(Page):
     def is_displayed(self):
         return (self.round_number == 1 and self.player.s1_correct == False)
     form_model = 'player'
-    form_fields = ['s1_group_left' , 's1_group_right']
+    form_fields = ['s1_group_left']
 
     def before_next_page(self):
-        if self.player.s1_group_left != 2 or self.player.s1_group_right != 5:
+        if self.player.s1_group_left != 6:
             self.player.s1_falsetries += 1
-        elif self.player.s1_group_left == 2 or self.player.s1_group_right == 5:
+        elif self.player.s1_group_left == 6:
             self.player.s1_correct = True
 
 class Solution1(Page):
@@ -46,9 +46,9 @@ class Situation2(Page):
     form_fields = ['s2_group']
 
     def before_next_page(self):
-        if self.player.s2_group != 3:
+        if self.player.s2_group != 4:
             self.player.s2_falsetries += 1
-        elif self.player.s2_group == 3:
+        elif self.player.s2_group == 4:
             self.player.s2_correct = True
 
 class Solution2(Page):
@@ -77,12 +77,12 @@ class Situation4(Page):
     def is_displayed(self):
         return (self.round_number == 1 and self.player.s4_correct == False)
     form_model = 'player'
-    form_fields = ['s4_group_left' , 's4_group_right']
+    form_fields = ['s4_group_left']
 
     def before_next_page(self):
-        if self.player.s4_group_left != 4 or self.player.s4_group_right != 7:
+        if self.player.s4_group_left != 4:
             self.player.s4_falsetries += 1
-        elif self.player.s4_group_left == 4 or self.player.s4_group_right == 7:
+        elif self.player.s4_group_left == 4:
             self.player.s4_correct = True
 
 class Solution4(Page):
@@ -102,7 +102,6 @@ class TryAgain2(Page):
 class TryAgain3(Page):
     def is_displayed(self):
         return (self.round_number == 1 and self.player.s3_correct == False)
-
 
 
 class TryAgain4(Page):
@@ -136,6 +135,9 @@ class Belief3(Page):
     form_model = 'player'
     form_fields = ['belief_q3']
     timeout_submission = {'belief_q3': 1}
+
+    def vars_for_template(self):
+        return {'round': self.player.round_number - 1}
 
     def before_next_page(self):
         if self.timeout_happened:
@@ -210,6 +212,7 @@ class Results1 (Page):
     def vars_for_template(self):
         # save the player objects in a dic to be able to identify them by label
         pl_objects = {}
+        pl_objects['round'] = self.player.round_number - 1
         for player in self.player.group.get_players():
             for label in ['Player A', 'Player B', 'Player C']:
                 if player.label == label:
@@ -257,7 +260,8 @@ class Results2 (Page):
 
     def vars_for_template(self):
         return {'round': self.player.round_number - 1,
-                'points': self.player.indiv_share + self.player.privat_account}
+                'points': self.player.indiv_share + self.player.privat_account,
+                'private': self.player.privat_account}
 
 
 #old version of the page, displays full debug tables and non ordering of the table
@@ -581,21 +585,25 @@ class Economic4(Page):
                    'exper',
                    ]
 
-class RiskTest(Page):
+class Test1(Page):
     def is_displayed(self):
         return (self.round_number == Constants.num_rounds)
     form_model = 'player'
     form_fields = ['test_risk_1',
-                   'test_risk_2'
+                   'test_risk_2',
+                   'test_risk_3',
+                   'test_risk_4'
                    ]
 
 
-class AmbTest(Page):
+class Test2(Page):
     def is_displayed(self):
         return (self.round_number == Constants.num_rounds)
     form_model = 'player'
     form_fields = ['test_amb_1',
-                   'test_amb_2'
+                   'test_amb_2',
+                   'test_amb_3',
+                   'test_amb_4'
                    ]
 
 
@@ -642,16 +650,15 @@ page_sequence = [
     DynamicBreakPoint1,
     DBP1WaitPage,
     DynamicBreakPoint2,
-    RiskTest,
+    Test1,
     DBP2WaitPage,
     Elicitation1,
     DynamicBreakPoint2,
-    AmbTest,
+    Test2,
     DBP2WaitPage,
     Elicitation2,
     DynamicBreakPoint2,
     DBP2WaitPage,
-    DemographicsPilot,
     DynamicBreakPoint2,  # no Wait page here because participants get payed one at a time
     AdminPage,
     GrossPayoff

@@ -18,55 +18,77 @@
 
         {% if player.gets_bonus == 1 %}
 
+            {% if private == 0 %}
 
-            {% if points == 2 %}
-                <img src="{% static "fieldtrip2/Results2A.png" %}">
-            {% elif points == 3 %}
-                <img src="{% static "fieldtrip2/Results3A.png" %}">
-            {% elif points == 4 %}
-                <img src="{% static "fieldtrip2/Results4A.png" %}">
-            {% elif points == 5 %}
-                <img src="{% static "fieldtrip2/Results5A.png" %}">
-            {% elif points == 6 %}
-                <img src="{% static "fieldtrip2/Results6A.png" %}">
-            {% elif points == 7 %}
-                <img src="{% static "fieldtrip2/Results7A.png" %}">
+                {% if points == 2 %}
+                    <img src="{% static "fieldtrip2/Results2A.png" %}">
+                {% elif points == 4 %}
+                    <img src="{% static "fieldtrip2/Results4A.png" %}">
+                {% elif points == 6 %}
+                    <img src="{% static "fieldtrip2/Results6A.png" %}">
+                {% endif %}
+
+            {% elif private == 4 %}
+
+                {% if points == 4 %}
+                    <img src="{% static "fieldtrip2/Results3A.png" %}">
+                {% elif points == 6 %}
+                    <img src="{% static "fieldtrip2/Results5A.png" %}">
+                {% elif points == 8 %}
+                    <img src="{% static "fieldtrip2/Results7A.png" %}">
+                {% endif %}
+
             {% endif %}
 
         {% elif player.gets_bonus == 0 %}
 
 
-            {% if points == 2 %}
-                <img src="{% static "fieldtrip2/Results2B.png" %}">
-            {% elif points == 3 %}
-                <img src="{% static "fieldtrip2/Results3B.png" %}">
-            {% elif points == 4 %}
-                <img src="{% static "fieldtrip2/Results4B.png" %}">
-            {% elif points == 5 %}
-                <img src="{% static "fieldtrip2/Results5B.png" %}">
-            {% elif points == 6 %}
-                <img src="{% static "fieldtrip2/Results6B.png" %}">
-            {% elif points == 7 %}
-                <img src="{% static "fieldtrip2/Results7B.png" %}">
+            {% if private == 0 %}
+
+                {% if points == 2 %}
+                    <img src="{% static "fieldtrip2/Results2B.png" %}">
+                {% elif points == 4 %}
+                    <img src="{% static "fieldtrip2/Results4B.png" %}">
+                {% elif points == 6 %}
+                    <img src="{% static "fieldtrip2/Results6B.png" %}">
+                {% endif %}
+
+            {% elif private == 4 %}
+
+                {% if points == 4 %}
+                    <img src="{% static "fieldtrip2/Results3B.png" %}">
+                {% elif points == 6 %}
+                    <img src="{% static "fieldtrip2/Results5B.png" %}">
+                {% elif points == 8 %}
+                    <img src="{% static "fieldtrip2/Results7B.png" %}">
+                {% endif %}
+
             {% endif %}
 
         {% endif %}
 
-
     {% elif player.treatment == 'nosanction' %}
 
-         {% if points == 2 %}
-             <img src="{% static "fieldtrip2/Results2ns.png" %}">
-         {% elif points == 3 %}
-             <img src="{% static "fieldtrip2/Results3ns.png" %}">
-         {% elif points == 4 %}
-             <img src="{% static "fieldtrip2/Results4ns.png" %}">
-         {% elif points == 5 %}
-             <img src="{% static "fieldtrip2/Results5ns.png" %}">
-         {% elif points == 6 %}
-             <img src="{% static "fieldtrip2/Results6ns.png" %}">
-         {% elif points == 7 %}
-             <img src="{% static "fieldtrip2/Results7ns.png" %}">
+         {% if private == 0 %}
+
+             {% if points == 2 %}
+                 <img src="{% static "fieldtrip2/Results2ns.png" %}">
+             {% elif points == 4 %}
+                 <img src="{% static "fieldtrip2/Results4ns.png" %}">
+             {% elif points == 6 %}
+                 <img src="{% static "fieldtrip2/Results6ns.png" %}">
+             {% endif %}
+
+         {% elif private == 4 %}
+
+            {% if points == 4 %}
+                <img src="{% static "fieldtrip2/Results3ns.png" %}">
+            {% elif points == 6 %}
+                <img src="{% static "fieldtrip2/Results5ns.png" %}">
+            {% elif points == 8 %}
+                <img src="{% static "fieldtrip2/Results7ns.png" %}">
+            {% endif %}
+
          {% endif %}
 
     {% endif %}
@@ -101,24 +123,24 @@
 
     <style type="text/css">
 
+
+
         input{
 
         }
 
-
         img{
-            width:32em;
-            height:32em;
-
+            width:20em;
+            height:20em;
+            margin-left: 1.8em;
         }
 
 
         label {
-            float: left;
-            padding: 0 1em;
+            float: none;
+            padding: 0 0em;
             text-align: center;
         }
-
     </style>
 
 

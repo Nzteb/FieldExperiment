@@ -1,22 +1,24 @@
 {% extends "global/Page.html" %}
 {% load staticfiles otree %}
 
-{#{% block title %}#}
-{#    Page title#}
-{#{% endblock %}#}
+{% comment %}
+{% block title %}
+
+{% endblock %}
+{% endcomment %}
 
 {% block content %}
 
     <div id="main">
 
           <label id="label1" for="value1"><br><img src="{% static "fieldtrip2/test3.png" %}"><br><br>
-              <input name="s3_group" id="value1" type = "number" min="0" max="100"  required="True" >
+              <input name="s3_group" id="value1" type = "number" min="0" max="9"  required="True" >
           </label>
 
-         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+         <br><br>
 
     </div>
-
 
     {% next_button %}
 {% endblock %}
@@ -28,25 +30,26 @@
 
     <style type="text/css">
 
+
+
         input{
 
         }
 
-
         img{
-            width:25em;
-            height:25em;
-
+            width:20em;
+            height:20em;
+            margin-left: 1.8em;
         }
 
 
         label {
-            float: left;
-            padding: 0 1em;
+            float: none;
+            padding: 0 0em;
             text-align: center;
         }
-
     </style>
 
 
 {% endblock %}
+

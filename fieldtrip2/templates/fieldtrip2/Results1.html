@@ -1,21 +1,28 @@
 {% extends "global/Page.html" %}
 {% load staticfiles otree %}
 
-{#{% block title %}#}
-{#    Round Results#}
-{#{% endblock %}#}
+
+{% block title %}
+    {%  if player.round_number > 1%}
+    Round {{round}}
+    {% endif %}
+
+{% endblock %}
+
+
 
 {% block content %}
-    <b>
+
+     <b>
     {% if player.treatment == 'sanction' %}
         {% if group.majority_type == 1 %}
-            Rule executed:<br> <img class="rulepic" src="{% static "fieldtrip2/keeperexcluded.png" %}"> <br>
+            <br> <img class="rulepic" src="{% static "fieldtrip2/keeperexcluded.png" %}"> <br>
         {% elif group.majority_type == 2 %}
-            Rule executed:<br> <img class="rulepic" src="{% static "fieldtrip2/giverexcluded.png" %}"> <br>
+            <br> <img class="rulepic" src="{% static "fieldtrip2/giverexcluded.png" %}"> <br>
         {% elif group.majority_type == 3 %}
-            Rule executed:<br> <img class="rulepic" src="{% static "fieldtrip2/nooneexcluded.png" %}"><br>
+            <br> <img class="rulepic" src="{% static "fieldtrip2/nooneexcluded.png" %}"><br>
         {% else %}
-            Rule executed:<br> <img class="rulepic" src="{% static "fieldtrip2/nooneexcluded.png" %}">  <br>
+            <br> <img class="rulepic" src="{% static "fieldtrip2/nooneexcluded.png" %}">  <br>
         {% endif %}
     {% endif %}
     </b>
@@ -33,20 +40,20 @@
 
         <tr>
             <th><p style="color: blue; font-size: 45px;">You</p></th>
-            <th>{% if player.binary_choice == 1%} <img class="tablepic" src="{% static "fieldtrip2/keep2.png" %}"> {% else %}<img class="tablepic" src="{% static "fieldtrip2/give.png" %}">{% endif %}</th>
+            <th>{% if player.binary_choice == 1%} <img class="tablepic" src="{% static "fieldtrip2/keep.png" %}"> {% else %}<img class="tablepic" src="{% static "fieldtrip2/give.png" %}">{% endif %}</th>
             {% if player.treatment == 'sanction' %}<th>{% if player.gets_bonus == 1%}<img class="tablepic" src="{% static "fieldtrip2/yes.png" %}">{% else %}<img class="tablepic" src="{% static "fieldtrip2/no.png" %}">{% endif %}</th>{% endif %}
         </tr>
 
         <tr>
             <th>{{ p2_label }}</th>
-            <th>{% if p2_choice == 1%} <img class="tablepic" src="{% static "fieldtrip2/keep2.png" %}"> {% else %}<img class="tablepic" src="{% static "fieldtrip2/give.png" %}">{% endif %}</th>
+            <th>{% if p2_choice == 1%} <img class="tablepic" src="{% static "fieldtrip2/beliefkeep.png" %}"> {% else %}<img class="tablepic" src="{% static "fieldtrip2/beliefgive.png" %}">{% endif %}</th>
             {% if player.treatment == 'sanction' %}<th>{% if p2_bonus == 1%}<img class="tablepic" src="{% static "fieldtrip2/yes.png" %}">{% else %}<img class="tablepic" src="{% static "fieldtrip2/no.png" %}">{% endif %}</th>{% endif %}
         </tr>
 
 
         <tr>
             <th>{{ p3_label }}</th>
-            <th>{% if p3_choice == 1%} <img class="tablepic" src="{% static "fieldtrip2/keep2.png" %}"> {% else %}<img class="tablepic" src="{% static "fieldtrip2/give.png" %}">{% endif %}</th>
+            <th>{% if p3_choice == 1%} <img class="tablepic" src="{% static "fieldtrip2/beliefkeep.png" %}"> {% else %}<img class="tablepic" src="{% static "fieldtrip2/beliefgive.png" %}">{% endif %}</th>
             {% if player.treatment == 'sanction' %}<th>{% if p3_bonus == 1%}<img class="tablepic" src="{% static "fieldtrip2/yes.png" %}">{% else %}<img class="tablepic" src="{% static "fieldtrip2/no.png" %}">{% endif %}</th>{% endif %}
         </tr>
     </table>
@@ -85,13 +92,13 @@
 
 
         .rulepic{
-            width:19em;
-            height:16em;
+            width:5em;
+            height:7.5em;
         }
 
         .tablepic{
-            width:8em;
-            height:5.5em;
+            width:4em;
+            height:4.5em;
         }
 
 
