@@ -460,37 +460,46 @@ class Demographics(Page):
     form_model = 'player'
     form_fields = ["age",
                    "gender",
-                   "fishyears",
-                   "whyfish",
-                   ]
+                   "ethnicity"]
 
-class DemographicsPilot(Page):
+class Demographics2(Page):
     def is_displayed(self):
         return (self.round_number == Constants.num_rounds)
     form_model = 'player'
-    form_fields = ["age",
-                   "gender",
-                   "study"
+    form_fields = ["fishyears",
+                   "whyfish",
                    ]
 
 
-class Demographics2(Page):
+
+class Demographics3(Page):
     def is_displayed(self):
         return (self.round_number == Constants.num_rounds)
     form_model = 'player'
     form_fields = ["closesite",
                    'movefreq',
                    'moveloc',
-                   'parentshere',
+                   ]
+
+class Demographics4(Page):
+    def is_displayed(self):
+        return (self.round_number == Constants.num_rounds)
+    form_model = 'player'
+    form_fields = ['parentshere',
                    'parentsfisher']
 
-class Demographics3(Page):
+class Demographics5(Page):
     def is_displayed(self):
         return (self.round_number == Constants.num_rounds)
     form_model = 'player'
     form_fields = ["targetspecies",
-                   'targetspeciesswitch',
-                   'maingear',
+                   'targetspeciesswitch']
+
+class Demographics6(Page):
+    def is_displayed(self):
+        return (self.round_number == Constants.num_rounds)
+    form_model = 'player'
+    form_fields = ['maingear',
                    'role',
                    'crewsize']
 
@@ -498,15 +507,20 @@ class Compliance(Page):
     def is_displayed(self):
         return (self.round_number == Constants.num_rounds)
     form_model = 'player'
-    form_fields = ['complya',
-                   'complyb',
-                   'complyc',
-                   'complyd',
-                   'complye',
-                   ]
-
+    form_fields = ['tradition',
+                   'perception']
 
 class Compliance2(Page):
+        def is_displayed(self):
+            return (self.round_number == Constants.num_rounds)
+        form_model = 'player'
+        form_fields = ['complya',
+                       'complyb',
+                       'complyc',
+                       'complyd',
+                       'complye',]
+
+class Compliance3(Page):
     def is_displayed(self):
         return (self.round_number == Constants.num_rounds)
     form_model = 'player'
@@ -515,15 +529,15 @@ class Compliance2(Page):
                    'whomonitor_police',
                    'whomonitor_officer',
                    'whomonitor_noone',
-                   'freqmonitor']
+                   ]
 
-class Compliance3(Page):
+class Compliance4(Page):
     def is_displayed(self):
         return (self.round_number == Constants.num_rounds)
     form_model = 'player'
-    form_fields = ['fineknow',
+    form_fields = ['freqmonitor'
+                   'fineknow',
                    'finelevel',
-                   'finelevelestimate',
                    ]
 
 
@@ -532,12 +546,17 @@ class Management(Page):
         return (self.round_number == Constants.num_rounds)
     form_model = 'player'
     form_fields = ['manchallenge',
-                   'manunsusprac',
-                   'manunsuspeople',
+                   'manunsusprac']
+
+class Management2(Page):
+    def is_displayed(self):
+        return (self.round_number == Constants.num_rounds)
+    form_model = 'player'
+    form_fields = ['manunsuspeople',
                    'manoption',
                    'manresponsibility']
 
-class Management2(Page):
+class Management3(Page):
     def is_displayed(self):
         return (self.round_number == Constants.num_rounds)
     form_model = 'player'
@@ -552,36 +571,42 @@ class Economic(Page):
     form_model = 'player'
     form_fields = ['ecohhpeople',
                    'ecohhearn',
-                   'ecohhfracfish',
+                   'ecohhleader',
                   ]
 
 class Economic2(Page):
     def is_displayed(self):
         return (self.round_number == Constants.num_rounds)
     form_model = 'player'
-    form_fields = ['compare',
-                   'howpast',
-                   'howfuture'
+    form_fields = ['ecohhfracfish',
+                   'ecohhfraccons',
+                   'varyday',
+                   'varywhy'
                   ]
 
 class Economic3(Page):
     def is_displayed(self):
         return (self.round_number == Constants.num_rounds)
     form_model = 'player'
-    form_fields = ['earngood',
-                   'earnnormal',
-                   'earnbad',
-                   'catchgood',
-                   'catchnormal',
-                   'catchbad'
-                  ]
+    form_fields = ['dayearning',
+                   'invest'
+                   ]
 
 class Economic4(Page):
     def is_displayed(self):
         return (self.round_number == Constants.num_rounds)
     form_model = 'player'
-    form_fields = ['futurefish',
-                   'risk',
+    form_fields = ['howpast',
+                   'howfuture',
+                   'futurefish'
+                  ]
+
+class Economic5(Page):
+    def is_displayed(self):
+        return (self.round_number == Constants.num_rounds)
+    form_model = 'player'
+    form_fields = ['risk',
+                   'trust',
                    'exper',
                    ]
 
@@ -659,6 +684,18 @@ page_sequence = [
     Elicitation2,
     DynamicBreakPoint2,
     DBP2WaitPage,
+    Demographics,
+    Demographics2,
+    Demographics3,
+    Compliance,
+    Compliance2,
+    Compliance3,
+    Management,
+    Management2,
+    Economic,
+    Economic2,
+    Economic3,
+    Economic4,
     DynamicBreakPoint2,  # no Wait page here because participants get payed one at a time
     AdminPage,
     GrossPayoff

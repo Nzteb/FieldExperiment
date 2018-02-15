@@ -2,25 +2,18 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-    Economic situation
+    Survey 15
 {% endblock %}
 
 {% block content %}
 
-    {% formfield player.compare %}
+    {% formfield player.ecohhfracfish %}
 
-    {% formfield player.howpast %}
+    {% formfield player.ecohhfraccons %}
 
-    {% formfield player.howfuture %}
+    {% formfield player.varyday %}
 
-<!--
-Documentation on how to write a django template here:
-https://docs.djangoproject.com/en/1.8/ref/templates/language/
-
-Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
-http://getbootstrap.com/components/
-
--->
+    {% formfield player.varywhy %}
 
     {% next_button %}
 

@@ -2,34 +2,15 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-    Economic situation
+    Survey 16
 {% endblock %}
 
 {% block content %}
 
-    How much do you earn in TZS:
+    {% formfield player.dayearning %}
 
-    {% formfield player.earngood %}
+    {% formfield player.invest %}
 
-    {% formfield player.earnnormal %}
-
-    {% formfield player.earnbad %}
-
-    How much fish do you catch in KG:
-
-    {% formfield player.catchgood %}
-
-    {% formfield player.catchnormal %}
-
-    {% formfield player.catchbad %}
-<!--
-Documentation on how to write a django template here:
-https://docs.djangoproject.com/en/1.8/ref/templates/language/
-
-Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
-http://getbootstrap.com/components/
-
--->
 
     {% next_button %}
 

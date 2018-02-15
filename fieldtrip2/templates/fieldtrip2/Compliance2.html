@@ -2,24 +2,20 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-    Compliance
+    Survey 8
 {% endblock %}
 
 {% block content %}
 
-    {% formfield player.complyother %}
+    {% formfield player.complya %}
 
-   <span style="font-weight:bold">Do the following groups monitor compliance in your area?</span>
+    {% formfield player.complyb %}
 
-    {% formfield player.whomonitor_fish %}
+    {% formfield player.complyc %}
 
-    {% formfield player.whomonitor_police %}
+    {% formfield player.complyd %}
 
-    {% formfield player.whomonitor_officer %}
-
-    {% formfield player.whomonitor_noone %}
-
-    {% formfield player.freqmonitor %}
+    {% formfield player.complye %}
 
     {% next_button %}
 

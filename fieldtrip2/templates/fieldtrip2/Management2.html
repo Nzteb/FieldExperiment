@@ -2,25 +2,16 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-    Management
+    Survey 12
 {% endblock %}
 
 {% block content %}
 
-    {% formfield player.manbmuchal %}
+    {% formfield player.manunsuspeople %}
 
-    {% formfield player.manbmuperformance %}
+    {% formfield player.manoption %}
 
-    {% formfield player.manbmupreference %}
-
-<!--
-Documentation on how to write a django template here:
-https://docs.djangoproject.com/en/1.8/ref/templates/language/
-
-Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
-http://getbootstrap.com/components/
-
--->
+    {% formfield player.manresponsibility %}
 
     {% next_button %}
 

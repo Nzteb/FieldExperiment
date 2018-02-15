@@ -2,16 +2,22 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-    Compliance
+    Survey 9
 {% endblock %}
 
 {% block content %}
 
-    {% formfield player.fineknow %}
+    {% formfield player.complyother %}
 
-    {% formfield player.finelevel %}
+    In your region, do the following people monitor compliance?
 
-    {% formfield player.finelevelestimate %}
+    {% formfield player.whomonitor_fish %}
+
+    {% formfield player.whomonitor_police %}
+
+    {% formfield player.whomonitor_officer %}
+
+    {% formfield player.whomonitor_noone %}
 
     {% next_button %}
 

@@ -2,29 +2,14 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-    Compliance
+    Survey 7
 {% endblock %}
 
 {% block content %}
 
-    {% formfield player.complya %}
+    {% formfield player.tradition %}
 
-    {% formfield player.complyb %}
-
-    {% formfield player.complyc %}
-
-    {% formfield player.complyd %}
-
-    {% formfield player.complye %}
-
-<!--
-Documentation on how to write a django template here:
-https://docs.djangoproject.com/en/1.8/ref/templates/language/
-
-Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
-http://getbootstrap.com/components/
-
--->
+    {% formfield player.perception %}
 
     {% next_button %}
 

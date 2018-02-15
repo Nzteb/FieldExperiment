@@ -56,7 +56,7 @@ DATABASES = {
 #AUTH_LEVEL = environ.get('OTREE_AUTH_LEVEL')
 
 ADMIN_PASSWORD = 'natcoop'
-DEBUG = False
+DEBUG = True
 AUTH_LEVEL = 'STUDY'
 
 # setting for integration with AWS Mturk

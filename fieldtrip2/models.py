@@ -7,7 +7,7 @@ from otree.api import (
 author = 'Patrick Betz, Robbert Schaap'
 
 doc = """
-Your app description
+
 """
 
 
@@ -15,7 +15,7 @@ Your app description
 class Constants(BaseConstants):
     name_in_url = 'fieldtrip2'
     players_per_group = 3 # must not be changed
-    num_rounds = 1
+    num_rounds = 7
 
     shilling_mult = 300
     belief_bonus = 1
@@ -385,7 +385,7 @@ class Player(BasePlayer):
     )
 
     fishyears = models.CharField(
-        choices=['This year only', '2 to 4', '6 to 10', '11 or more', 'No answer'],
+        choices=['This year only', '2 to 4', '5 to 10', '11 or more', 'No answer'],
         widget=widgets.RadioSelect(),
         blank=False,
         label="How many years have you been a fisher?"
@@ -399,7 +399,7 @@ class Player(BasePlayer):
     )
 
     closesite = models.CharField(
-        choices=['This year only', '2 to 4', '6 to 10', '11 or more', 'No answer'],
+        choices=['This year only', '2 to 4', '5 to 10', '11 or more', 'No answer'],
         widget=widgets.RadioSelect(),
         blank=False,
         label="Have many years have you lived close to this landing site?"
@@ -468,77 +468,81 @@ class Player(BasePlayer):
         label='How many people are on board your vessel including yourself?',
     )
 
+    tradition = models.CharField(
+        label='Think of the typical fisherman at this beach. What is his view on tradition?',
+        choices=['Traditions must be respected at all times', 'Traditions are useful guidelines', 'Traditions are bad because they stop innovations'],
+        blank=False,
+        widget=widgets.RadioSelect
+    )
+    perception = models.CharField(
+        label='Think of the typical fisherman at this beach. What is his view on being a fisherman?',
+        choices=['It is a respected profession','It is a good way to make money','It is work that people do when they do not find other work', 'It is indecent work'],
+        blank=False,
+        widget=widgets.RadioSelect
+    )
+
     complya = models.CharField(
         choices=['Almost all comply', 'Most comply', 'Many comply', 'Few comply', 'Almost no one complies'],
         widget=widgets.RadioSelect(),
-        blank=True,
+        blank=False,
         label='Gillnet meshsize is above 5 inches.',
     )
     complyb = models.CharField(
         choices=['Almost all comply', 'Most comply', 'Many comply', 'Few comply', 'Almost no one complies'],
         widget=widgets.RadioSelect(),
-        blank=True,
+        blank=False,
         label="Dagaa net meshsize is above 10 mm.",
     )
     complyc = models.CharField(
         choices=['Almost all comply', 'Most comply', 'Many comply', 'Few comply', 'Almost no one complies'],
         widget=widgets.RadioSelect(),
-        blank=True,
+        blank=False,
         label="Vessels have proper licenses.",
     )
     complyd = models.CharField(
         choices=['Almost all comply', 'Most comply', 'Many comply', 'Few comply', 'Almost no one complies'],
         widget=widgets.RadioSelect(),
-        blank=True,
+        blank=False,
         label="No undersized fish are landed.",
     )
 
     complye = models.CharField(
         choices=['Almost all comply', 'Most comply', 'Many comply', 'Few comply', 'Almost no one complies'],
         widget=widgets.RadioSelect(),
-        blank=True,
+        blank=False,
         label="No dynamite or poison is being used.",
     )
 
     complyother = models.CharField(
         choices=['More compliance', 'Less compliance', 'About the same'],
         widget=widgets.RadioSelect(),
-        blank=True,
+        blank=False,
         label="How is the situation in other areas?",
     )
 
     freqmonitor = models.CharField(
         choices=['Never', 'Once or twice', 'Once a year', 'Once a month', 'More often'],
         widget=widgets.RadioSelectHorizontal(),
-        blank=True,
+        blank=False,
         label='How often have you been controlled?',
     )
     fineknow = models.CharField(
         choices=['Yes', 'No'],
         widget=widgets.RadioSelectHorizontal(),
-        blank=True,
+        blank=False,
         label='Do you know the level of a fine if caught violating?',
     )
     finelevel = models.CharField(
         choices=['50.000 TZS', '150 000 TZS', '300 000 TZS', '500 000 TZS', 'More than 500 000 TZS'],
         widget=widgets.RadioSelectHorizontal(),
-        blank=True,
+        blank=False,
         label='What is the level of the fine? (If you do not know, please estimate the level of the fine).',
     )
-
-    finelevelestimate = models.CharField(
-        choices=['50.000 TZS', '150 000 TZS', '300 000 TZS', '500 000 TZS', 'More than 500 000 TZS'],
-        widget=widgets.RadioSelectHorizontal(),
-        blank=True,
-        label='What do you think that the level of the fine is?',
-    )
-
-
 
     manchallenge = models.CharField(
         choices=['Unsustainable practices', 'Increased effort and capactity', 'Eutrophication'],
         widget=widgets.RadioSelect(),
-        blank=True,
+        blank=False,
         label='What do you consider to be a major challenge facing fisheries in your area?',
     )
 
@@ -551,7 +555,7 @@ class Player(BasePlayer):
     manunsuspeople = models.CharField(
         choices=['They are rich fishers', 'They are poor fishers', 'All are involved'],
         widget=widgets.RadioSelect(),
-        blank=True,
+        blank=False,
         label='What is your view about those engaged in unsustainable practices in your area',
     )
     manoption = models.CharField(
@@ -560,34 +564,34 @@ class Player(BasePlayer):
                  'Giving fishing community power to control acces', 'Provision of eduation fo fishers',
                  'Control/treat effluents emission to the lake'],
         widget=widgets.RadioSelect(),
-        blank=True,
+        blank=False,
         label='What do you consider approriate options for adressing the challenge mentioned above',
     )
 
     manresponsibility = models.CharField(
         choices=['The state', 'BMU', 'State and BMU jointly', 'Fish processing industries', 'Civil societies'],
         widget=widgets.RadioSelect(),
-        blank=True,
+        blank=False,
         label='In your opinion, who have more responsibilities in fisheries management in your area?',
     )
 
     manbmuchal = models.CharField(
         label='Do you think the BMU as currently constituted can adress challenges facing the fisheries in your area?',
-        blank=True,
+        blank=False,
         choices=['Yes', 'No', 'No answer'],
         widget=widgets.RadioSelect
     )
 
     manbmuperformance = models.CharField(
         label='Are you satisfied with the performance of your representative in the BMU committee in your area',
-        blank=True,
+        blank=False,
         choices=['Yes', 'No', 'No answer'],
         widget=widgets.RadioSelect
     )
 
     manbmupreference = models.CharField(
         label='If given the chance to strengthen the BMU, what do you prefer most?',
-        blank=True,
+        blank=False,
         choices=['Reduce committee membership', 'Give them more responsibility', 'Financial sustainability',
                  'Improve interatcion with other stakeholders'],
         widget=widgets.RadioSelect
@@ -595,98 +599,104 @@ class Player(BasePlayer):
 
     ecohhpeople = models.CharField(
         label='How many people are in your household?',
-        blank=True,
+        blank=False,
         choices=['1', '2', '3-5', '6-10', '11-15', 'more than 15'],
-        widget=widgets.RadioSelectHorizontal
+        widget=widgets.RadioSelect
     )
 
     ecohhearn = models.CharField(
         label='How many people earn money or provide food in your household?',
-        blank=True,
+        blank=False,
         choices=['1', '2', '3-5', '6-10', '11-15', 'more than 15'],
         widget=widgets.RadioSelect
     )
 
     ecohhleader = models.CharField(
         label='Who takes the important descisions in your household?',
-        blank=True,
-        choices=['I myself','My spouse','My father','My uncle','My grandfather/granduncle','other']
+        blank=False,
+        choices=['I myself','My spouse','My father','My uncle','My grandfather/granduncle','other'],
+        widget = widgets.RadioSelect
+
     )
 
-    ecohhfracfish = models.CharField(
-        label='Which fraction of the total income in your household comes from fishing?',
-        blank=True,
-        choices=['1-25%', '25-50%', '50-75%', '75-100%'],
+    ecohhfracfish = models.IntegerField(
+        label='What percentage of the total income in your household comes from fishing?',
+        blank=False,
+        widget=widgets.Slider,
+        min=0,
+        max=100,
+    )
+
+    ecohhfraccons = models.IntegerField(
+        label='Which fraction of your catch do you keep for own consumption',
+        blank=False,
+        widget=widgets.Slider,
+        min=0,
+        max=100,
+    )
+
+    varyday = models.CharField(
+        label='On a day-to-day basis, does your catch earning vary?',
+        choices=['Very much','A lot','A bit', 'Not at all', "No answer"],
+        widget=widgets.RadioSelect,
+        blank=False
+    )
+
+    varywhy = models.CharField(
+        label='Why does your catch earning vary mostly?',
+        choices=['Big or small catch','High or low prices','species caught that day', "No answer"],
+        widget=widgets.RadioSelect,
+        blank=False
+    )
+
+    dayearning = models.CharField(
+        label="How much do you earn on a normal day",
+        blank=False,
+        choices=["Less than 5,000 TZS", "About 10,000 TZS","About 20,000 TZS","About 30,000 TZS","About 50,000 TZS", "100,000 TZS or more", "No answer"],
         widget=widgets.RadioSelect
     )
-    compare = models.CharField(
-        label='Compared to what you consider normal, was this a good fishing season so far?',
-        blank=True,
-        choices=['Very good', 'Good', 'Average', 'Bad', 'Very bad', 'No answer'],
-        widget=widgets.RadioSelect
+
+    invest = models.CharField(
+        label="How much have you invested in fishing(gear, boat, motor etc)?",
+        choices=["0 TZS", "less than 10.000 TZS" , "Less than 100.000 TZS", "Less than 1.000.000 TZS", "Less than 5.000.000 TZS", "More than 5.000.000 TZS", "No answer"],
+        widget=widgets.RadioSelect,
+        blank=False
     )
-    earngood = models.IntegerField(
-        label='On a good day:',
-        blank=True,
-        min=0,
-        max=10000000
-    )
-    earnnormal = models.IntegerField(
-        label='On a normal day:',
-        blank=True,
-        min=0,
-        max=10000000
-    )
-    earnbad = models.IntegerField(
-        label='On a bad day:',
-        blank=True,
-        min=0,
-        max=10000000
-    )
-    catchgood = models.IntegerField(
-        label='On a good day:',
-        blank=True,
-        min=0,
-        max=10000000
-    )
-    catchnormal = models.IntegerField(
-        label='On a normal day:',
-        blank=True,
-        min=0,
-        max=10000000
-    )
-    catchbad = models.IntegerField(
-        label='On a bad day:',
-        blank=True,
-        min=0,
-        max=10000000
-    )
+
     howpast = models.CharField(
-        label='How does a normal fishing trip today compare to a trip last year?',
+        label='Do you earn more money with fishing this year, than you did in the past?',
         blank=True,
-        choices=['It has improved', 'It has stayed the same', 'It has worsened'],
-        widget=widgets.RadioSelect
-    )
+        choices=['Yes', 'No', 'It has stayed the same', 'No answer'],
+        widget=widgets.RadioSelect)
+
 
     howfuture = models.CharField(
-        label='How do you think a normal fishing trip today will compare to a trip next year?',
-        blank=True,
-        choices=['It will improve', 'It will stay the same', 'It will worsen'],
+        label='Do you expect to earn more money with fishing in the future? ',
+        blank=False,
+        choices=['Yes', 'No', 'It will stay the same', 'No answer'],
         widget=widgets.RadioSelect
     )
 
     futurefish = models.CharField(
         label='Do you see yourself being a fisher in 2 years time?',
-        blank=True,
+        blank=False,
         choices=['Yes', 'No', 'No answer'],
         widget=widgets.RadioSelect
     )
     risk = models.CharField(
         label='Generally speaking, are you a person who is willing to take risks?',
-        blank=True,
+        blank=False,
         choices=['1, Not willing to take risks', '2', '3', '4', '5', '6, Very willing to take risks'],
         widget=widgets.RadioSelectHorizontal
     )
+
+    trust = models.CharField(
+        label='Generally speaking, would you say that people can be trusted or that one cannot be too carefull?',
+        choices=['1,People can be trusted', '2', '3', '4', '5 Cannot be too carefull'],
+        blank=False,
+        widget=widgets.RadioSelectHorizontal
+    )
+
     exper = models.CharField(
         label='Have you participated in the NATCOOP survey before?',
         blank=True,
